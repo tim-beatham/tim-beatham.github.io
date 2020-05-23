@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>My A-Level Project</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="style.css">
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		</head>
+
+	<body>
+		
+		<div class="container justify-content-center">
+			<div class="my-auto">
+				
+				<h1>My A-Level Project</h1>
+
+				<h2>Number Mirror</h2>
+
+				<p>For my A-Level Computer Science coursework I decided to make a computer vision application I called this application Number Mirror. The point of it was to create an interactive way for young children to learn artihmetic. I used the programming language Python, the Computer Vision library OpenCV and the TKinter GUI library to achieve this. However I have to add a disclaimer, the application is incredibly inefficient. To use it you need to be using a white background and wearing black gloves to ensure the most accuracy. It is by no means revolutionary.</p>
+
+				<img class="image-width img-responsive" src="Number_Mirror/MainMenu.PNG" alt="The Number Mirror Application Main Menu state.">
+
+				<h2>The Login System</h2>
+
+				<p>For the application I implemented a login system using an SQLite database. The program stored information about the users game statistics such as how many games they have won, how many they have lost and questions that a user has answered. One thing to note is that I stored the password in plain text which obviously is a huge problem. </p>
+
+
+				<img class="image-width img-responsive" src="Number_Mirror/login.PNG" alt="The Login state.">
+
+				<h2>The Application In Action</h2>
+
+				<p>The actual game itself worked reasonably well under certain conditions as explained. The program requires the camera to be completely still. It requires that you do not put your hand in the box during certain parts of the game. The program worked by taking multiple images of the background and then calculating the mean background. I calculated the background mean to eliminate noise due to the quality of the camera. The user is then asked to put their hand up and the program records the user's hand. Of course I used techniques such as gaussian blur to improve the accuracy of the program. </p>
+
+
+				<img class="image-width img-responsive" src="Number_Mirror/play.PNG" alt="The Number Mirror application in action">
+
+				<br>
+
+				<p>I am sorry for the dodgy hair cut due to lockdown and the even worse choice of clothing. This picture will probably come back to haunt me but oh well.</p>
+
+				<h2>End Game Statistics</h2>
+
+				<p>Once the user has finished the game they are presented with end game information. They are first greeted with the number of points they got that game, their overall percentage out of all the games they have played and the total points they have accumulated. This is mainly for teachers so that they can see how well their student is performing.</p>
+
+				<img class="image-width img-responsive" src="Number_Mirror/end_game.PNG" alt="End game statistics the user is presented with">
+
+				<br>
+
+				<p>The user is next presented with a pie chart of the types of questions that the user gets wrong. The possible types of questions were: addition, subtraction and the multiplication tables from 1 to 10.</p>
+
+				<img class="image-width img-responsive" src="Number_Mirror/pie_chart.PNG" alt="The types of questions the user gets wrong.">
+
+				<br>
+
+				<p>Finally the user is presented with information relating to how much they have improved in the last five weeks. The y-axis displays the percentage of questions they got right and the x-axis displays the week in which the data was recorded. This helps the user visualise how much they are improving.</p>
+
+				<img class="image-width img-responsive" src="Number_Mirror/week_information.PNG" alt="Line graph showing user improvement.">
+
+				<br>
+
+				<p>That concludes this post. I thought I would share my A-Level project with everyone since today marks the anniversary (almost) since I completed my A-Levels.</p>
+
+
+			</div>
+
+
+
+		</div>
+	
+	
+
+
+	</body>
+
+
+
+
+
+</html>
