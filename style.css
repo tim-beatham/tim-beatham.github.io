@@ -1,0 +1,13 @@
+.centre{
+	margin: auto;
+	width: 50%;
+	padding 10px;
+	line-height: 1.6;
+}
+
+.image-centre{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
