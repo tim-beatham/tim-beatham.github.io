@@ -34,6 +34,8 @@
 
 				<p>The actual game itself worked reasonably well under certain conditions as explained. The program requires the camera to be completely still. It requires that you do not put your hand in the box during certain parts of the game. The program worked by taking multiple images of the background and then calculating the mean background. I calculated the background mean to eliminate noise due to the quality of the camera. The user is then asked to put their hand up and the program records the user's hand. Of course I used techniques such as gaussian blur to improve the accuracy of the program. </p>
 
+				<p>When a user got a question wrong the weight of the question stored in the database would be increased. This meant I could use a weighted random algorithm to make questions in which the user got wrong more likely to come up again.</p>
+
 
 				<img class="image-width img-responsive" src="Number_Mirror/play.PNG" alt="The Number Mirror application in action">
 
@@ -61,8 +63,7 @@
 
 				<br>
 
-				<p>That concludes this post. I thought I would share my A-Level project with everyone since today marks the anniversary (almost) since I completed my A-Levels.</p>
-
+				<p>That concludes this post. I thought I would share my A-Level project with everyone since today marks the anniversary (almost) since I completed my A-Levels. I might upload the project to GitHub later, but I will once again reiterate it is incredibly inefficient.</p>
 
 			</div>
 
