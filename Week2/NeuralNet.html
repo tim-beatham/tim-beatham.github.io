@@ -13084,7 +13084,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[313]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  
@@ -13109,7 +13109,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[297]:</div>
+<div class="prompt input_prompt">In&nbsp;[314]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">hypothesis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -13140,7 +13140,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[306]:</div>
+<div class="prompt input_prompt">In&nbsp;[315]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">cost_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">regularization</span><span class="p">,</span> <span class="n">logistic</span><span class="p">):</span>
@@ -13204,7 +13204,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[310]:</div>
+<div class="prompt input_prompt">In&nbsp;[329]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gradient_descent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -13268,65 +13268,6 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">]]</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="p">[</span><span class="mi">21</span><span class="p">],</span> <span class="p">[</span><span class="mi">24</span><span class="p">]]</span>
-
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
-<span class="n">gradient_descent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Learning rate 0.01
-Converged!
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[9]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>(array([[1., 1.],
-        [1., 2.],
-        [1., 3.],
-        [1., 4.],
-        [1., 5.],
-        [1., 6.],
-        [1., 7.],
-        [1., 8.]]),
- array([[0.49266742],
-        [2.91039308]]))</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13339,7 +13280,7 @@ Converged!
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[309]:</div>
+<div class="prompt input_prompt">In&nbsp;[330]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">predict_class</span><span class="p">(</span><span class="n">prob</span><span class="p">):</span>
@@ -13352,9 +13293,18 @@ Converged!
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Feature-Scaling">Feature Scaling<a class="anchor-link" href="#Feature-Scaling">&#182;</a></h3><p>Machine Learning algorithms work best when each feature is on a similar scale. If features are not in a similar scale it may result in underfitting of the data.</p>
+<p>One way of scaling features is to transform the data so that the data has a mean of 0 and a standard deviation of 1. If you have taken A-Level mathematics you will probably be familiar with this. To do this we calculate the mean of each feature and subtract each element by this mean. We then divide this by the standard deviation of that feature.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[331]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">feature_scaling</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
@@ -13376,9 +13326,19 @@ Converged!
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Multiclass-Classification-(One-vs-All)">Multiclass Classification (One-vs-All)<a class="anchor-link" href="#Multiclass-Classification-(One-vs-All)">&#182;</a></h3><p>So far I have talked about only how we can determine if something belongs to the positive class and if something belongs to the negative class. I as of yet have not talked about how to predict an outcome if there is more than one class. The technique I have implemented to carry this out is One-vs-All logistic classificaiton.</p>
+<p>In this method we iterate over each class and we carry out logistic classification as normal taking that class as the positive class and every other class as the negative class. If the probability of the X input being in that class is greater than the currently highest probability of it being in another class, we update the class in which X belongs to.</p>
+<p><img src="https://utkuufuk.com/2018/06/03/one-vs-all-classification/one-vs-all.png" alt="one-vs-all classification"></p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[337]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">logistic_classification_multi</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
@@ -13391,6 +13351,9 @@ Converged!
 
     <span class="c1"># Probabilities of each class.</span>
     <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+    
+    <span class="c1"># List of the thetas we have learnt.</span>
+    <span class="n">thetas</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">classes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="c1"># Choose close i as the positive class and the others as the negative class.</span>
@@ -13400,148 +13363,61 @@ Converged!
                                               <span class="n">logistic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="n">max_iters</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="n">regularization</span><span class="p">)</span>
         <span class="n">probs</span> <span class="o">=</span> <span class="n">hypothesis</span><span class="p">(</span><span class="n">theta_temp</span><span class="p">,</span> <span class="n">X_temp</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">temp_classes</span> <span class="o">=</span> <span class="n">predict_class</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+        
+        <span class="c1"># Append theta to the list of thetas for each class.</span>
+        <span class="n">theta_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta_temp</span><span class="p">)</span>
+        
                 
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">probs</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
                 <span class="n">probabilities</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">probs</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">i</span><span class="p">]</span>
                 
-    <span class="k">return</span> <span class="n">probabilities</span>
-      
-<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">]]</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">]]</span>
-
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
-
-    
-<span class="n">logistic_classification_multi</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">thetas</span><span class="p">,</span> <span class="n">probabilities</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Learning rate 0.5
-Converged!
-Learning rate 0.5
-Converged!
-Learning rate 0.5
-Converged!
-Learning rate 0.5
-Converged!
-Learning rate 0.5
-Converged!
-Learning rate 0.5
-Converged!
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[12]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[[0.43525346375480567, 0],
- [0.1711736992260901, 1],
- [0.38376150131459924, 2],
- [0.43525346375480567, 0],
- [0.1711736992260901, 1],
- [0.38376150131459924, 2],
- [0.43525346375480567, 0],
- [0.1711736992260901, 1],
- [0.38376150131459924, 2],
- [0.43525346375480567, 0],
- [0.1711736992260901, 1],
- [0.38376150131459924, 2],
- [0.43525346375480567, 0],
- [0.1711736992260901, 1],
- [0.38376150131459924, 2],
- [0.43525346375480567, 0],
- [0.1711736992260901, 1],
- [0.38376150131459924, 2]]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[338]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">logistic_classification_multi</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">logistic_classification</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This method is called by the user to generate theta.&quot;&quot;&quot;</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">gradient_descent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="n">max_iters</span><span class="p">,</span> 
                                <span class="n">regularization</span><span class="o">=</span><span class="n">regularization</span><span class="p">)</span>
     <span class="n">probs</span> <span class="o">=</span> <span class="n">hypothesis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">predict_class</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
-
-<span class="n">logistic_classification_multi</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">theta</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Learning rate 0.01
-Converged!
-</pre>
 </div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[88]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([[0],
-       [1],
-       [0],
-       [1],
-       [0],
-       [1],
-       [0],
-       [1]])</pre>
-</div>
-
-</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Neural-Networks">Neural Networks<a class="anchor-link" href="#Neural-Networks">&#182;</a></h3><p>Now we have got to the exciting part. The part which most people came to this page wanting to know. I am talking about Neural Networks. In particular I am talking about the feedforward neural network. The bad news is that as with anything exciting it is incredibly hard to implement. But nevertheless I have a working implementation. First of all I will let you digest the cost function:</p>
+<p><img src="https://i.stack.imgur.com/PYhrJ.png" alt="neural_networks_cost_function"></p>
+<p>It looks like a difficult formula but it is not too hard. In essense if we ignore paramatization we are calculating the sum of the costs for every node in the layer once we have done this we have found the cost of the model using one data sample. We then repeat this for as every data samples we have and divide by the number of samples.</p>
+<h4 id="Feed-Forward">Feed Forward<a class="anchor-link" href="#Feed-Forward">&#182;</a></h4><p>In the feed forward phase of the neural network we simply add a bias unit to each layer. Use a list of thetas to calculate the theta for each layer, we then apply the activation function (we're using sigmoid) for each node in that layer and so on until we get to the final layer which is our hypothesis.</p>
+<h4 id="Back-Propagation">Back Propagation<a class="anchor-link" href="#Back-Propagation">&#182;</a></h4><p>Back propagation is how we adjust the matrices of theta. In essense we calculate the error of the hypothesis and back propagate the error for each layer excluding the first.</p>
+<p>I know I haven't explained neural networks as detailed as I could have but it is an incredibly complicated algorithm and hard to explain abstractly. If anyone wants me to explain it in detail I would be happy to help.</p>
+<h4 id="Structure-of-a-Neural-Network">Structure of a Neural Network<a class="anchor-link" href="#Structure-of-a-Neural-Network">&#182;</a></h4><p><img src="https://uc-r.github.io/public/images/analytics/deep_learning/deep_nn.png" alt="structure_of_neuralnetworks"></p>
+<p>In a neural network each layer contains a bias unit which is the first node. This is equal to 1 for all nodes. We add our data to the first layer. Between the first layer and the output layer we have the nodes called the hidden nodes. These determine the complexity of what the neural network can learn. It is important to select the number of nodes in each layer carefully to avoid overfitting and underfitting.</p>
+<p>Neural Networks can make complicated inferences about data which linear and logistic regression simply cannot.</p>
+<p><img src="https://i.stack.imgur.com/8oi2L.png" alt="neural_network_decision_boundary"></p>
 
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[295]:</div>
+<div class="prompt input_prompt">In&nbsp;[340]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">NeuralNetwork</span><span class="p">:</span>
@@ -13712,6 +13588,14 @@ Converged!
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-End">The End<a class="anchor-link" href="#The-End">&#182;</a></h2><p>Thank you for putting up with me in this post. Have a good one.</p>
+
+</div>
+</div>
 </div>
     </div>
   </div>
