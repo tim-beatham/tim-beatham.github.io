@@ -13074,6 +13074,14 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Developing-a-Neural-Network-From-Scratch">Developing a Neural Network From Scratch<a class="anchor-link" href="#Developing-a-Neural-Network-From-Scratch">&#182;</a></h1><h2 id="Linear-and-Logistic-Regression">Linear and Logistic Regression<a class="anchor-link" href="#Linear-and-Logistic-Regression">&#182;</a></h2><h3 id="The-NumPy-library">The NumPy library<a class="anchor-link" href="#The-NumPy-library">&#182;</a></h3><p>Develing a Neural Network ultimately boils down to linear algebra. Therefore as a result I need a data structure which models matrices. This is where the library NumPy comes in. NumPy is a library which contains a data structure called a Numpy Array. This is essentially a matrix and we will use this to model the Neural Network.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
@@ -13087,12 +13095,25 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="The-Hypothesis-Function">The Hypothesis Function<a class="anchor-link" href="#The-Hypothesis-Function">&#182;</a></h3><p>The hypothesis function is simply a function in which we input our X matrix and a theta matrix in order to gain the 'hypothesis'. This is what we believe the value of Y will be.</p>
+<h4 id="Calculating-the-Hypothesis-in-Logistic-Regression">Calculating the Hypothesis in Logistic Regression<a class="anchor-link" href="#Calculating-the-Hypothesis-in-Logistic-Regression">&#182;</a></h4><p>Remember that logistic regression is essentially determining the class that X belongs to. The output can only be a discrete output. Therefore for the logistic hypothesis we need to transform it to a value between 0 and 1. This is where the sigmoid function comes in.</p>
+<p><img src="https://miro.medium.com/max/1280/1*sOtpVYq2Msjxz51XMn1QSA.png" alt="The sigmoid function"></p>
+<p>If the value of the sigmoid function is above 0.5 we say that X belongs to the positive class if the output is less than 0.5 we say that X belongs to the negative class.</p>
+<h4 id="Calculating-the-Hypothesis-In-Linear-Regression">Calculating the Hypothesis In Linear Regression<a class="anchor-link" href="#Calculating-the-Hypothesis-In-Linear-Regression">&#182;</a></h4><p>This is a much more familiar type of hypothesis. In fact most people reading this will have already implemented this without even releasing it. If you have ever drawn a line of best fit in Mathematics you have implemented lineaer regression. To calculate the hypothesis will simply multiply the matrix X by the matrix theta.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[297]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">hypothesis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the hypothesis for both logistic and linear regression&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">logistic</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">theta</span><span class="p">)))</span>
     <span class="k">else</span><span class="p">:</span>
@@ -13105,23 +13126,38 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="The-Cost-Function">The Cost Function<a class="anchor-link" href="#The-Cost-Function">&#182;</a></h3><p>Now that I have identified what the hypothesis means for both linear and logistic regression I will now talk about the cost function. The cost function is a function that allows us to measure how well our model fits the data provided.</p>
+<p>For linear regression this involves measuring the difference between the hypothesis for a given X and the actual Y value for that X. In linear regression one way of computing this is by calculating the mean square distance of the hypothesis and the Y values. The cost function for Linear Regression is as follows:</p>
+<p><img src="https://lh3.googleusercontent.com/proxy/u3kKnWFubERMPyDVfE3gKAc9NTXBpmkRj49VgOS5JsL1EbnHEoIrXV96UeS0PW2-M4ei-PC8UdHltNIPE3PZNtdd8yPLJB8rxC4H0ymorCnc9C00AZJtQA" alt="The Cost Function For Linear Regression"></p>
+<p>For logistic regression this involves something a bit more complicated. If y = 1 the cost of one data point is the negative logarithm of the hypothesis. If y = 0 is the negative logarithm of one minus the hypothesis. Putting this together means the cost function for Logistic Regression is as follows:</p>
+<p><img src="https://i.stack.imgur.com/XbU4S.png" alt="The Cost Funcction For Logistic Regression"></p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[306]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">cost_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">regularization</span><span class="p">,</span> <span class="n">logistic</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculates the cost and new theta for the given parameters&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the cost and new theta for the given parameters.</span>
+<span class="sd">    Calculates the cost function for both logistic and linear regression.</span>
+<span class="sd">    The Function also performs one iteration of gradient descent.&quot;&quot;&quot;</span>
     
-    <span class="c1"># Update theta using the grdient descent formula.</span>
-    <span class="c1"># Remember this requires simultaneous updating.</span>
+    <span class="c1"># Make a prediction using the given X and theta.</span>
     <span class="n">prediction</span> <span class="o">=</span> <span class="n">hypothesis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">logistic</span><span class="p">)</span>
 
+    <span class="c1"># Get the number of labelled data.</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
+    <span class="c1"># Calculate the difference between the prediction matrix and the Y matrix.</span>
     <span class="n">difference</span> <span class="o">=</span> <span class="n">prediction</span> <span class="o">-</span> <span class="n">Y</span>       
 
-    <span class="c1"># Calculate the sum.</span>
+    <span class="c1">##### Calculate the next theta using gradient descent.</span>
     <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">((</span><span class="n">difference</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
 
     <span class="n">theta_0</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="p">((</span><span class="n">learning_rate</span> <span class="o">/</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
@@ -13132,24 +13168,20 @@ div#notebook {
     <span class="n">square_theta</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span>
     <span class="n">square_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">square_theta</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">logistic</span><span class="p">:</span>           
-        
+    <span class="c1"># If we are not using a logistic model then we sum the square difference.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">logistic</span><span class="p">:</span>          
+        <span class="c1"># Calculate the cost using the linear function.</span>
         <span class="n">square_difference</span> <span class="o">=</span> <span class="n">difference</span> <span class="o">*</span> <span class="n">difference</span>
-        
         <span class="n">sigma</span> <span class="o">=</span> <span class="n">square_difference</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-
-        
         <span class="n">cost</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">+</span> <span class="n">regularization</span> <span class="o">*</span> <span class="n">square_theta</span><span class="p">)</span>
         
     <span class="k">else</span><span class="p">:</span>
-        
         <span class="c1"># Calculate the cost using the logistic function.</span>
         <span class="n">log_hypoth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
-      
         <span class="n">sigma</span> <span class="o">=</span> <span class="p">(</span><span class="n">Y</span> <span class="o">*</span> <span class="n">log_hypoth</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">prediction</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        
         <span class="n">cost</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(((</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">regularization</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">))</span> <span class="o">*</span> <span class="n">square_theta</span><span class="p">)</span>      
 
+    <span class="c1"># Return the cost of the model and the new theta we have calculated.</span>
     <span class="k">return</span> <span class="n">cost</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">theta_rest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">theta_0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
@@ -13158,22 +13190,33 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Gradient-Descent">Gradient Descent<a class="anchor-link" href="#Gradient-Descent">&#182;</a></h3><p>If you read the above code you may be a little confused. I have only talked about updating theta. If so you have been paying attention to this post. The above method is a convenience method and is never called directly. The program outputs the cost and it additionally outputs a new value of theta based on the derivative of the cost. The two are interlinked so I calculate them at the same time under one function.</p>
+<p>Gradient descent in Mathematics is an algorithm to find a minima numerically. The algorithm is defined as follows:</p>
+<p><img src="https://hackernoon.com/hn-images/0*8yzvd7QZLn5T1XWg.jpg" alt="The Gradient Descent Algorithm"></p>
+<p>We repeat gradient descent until theta stops updating. This in reality would take years so we declare a value in which if the difference between the previous theta value and the current theta value is less than this value then we stop converging.</p>
+<p>Alpha in the algorithm represents the learning rate. This is how far we go down the tangent of the derivative. If it is too small then gradient descent takes forever, if this is too large then gradient descent will diverge. We need to careful when implementing gradient descent as we may converge to a local minima and not a global minima.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[310]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gradient_descent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the optimum theta using gradient descent.</span>
-<span class="sd">       Remember that you may need to Op&amp;miza&amp;on    algorithms:    normalize your data.</span>
-<span class="sd">       We use regu&quot;&quot;&quot;</span>
+<span class="sd">       Remember that you may need to Optimizaton    algorithms.</span>
+<span class="sd">       We use regularization&quot;&quot;&quot;</span>
     
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Learning rate&quot;</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">)</span>
     
-    <span class="c1"># Number of training Accuracye examples.</span>
+    <span class="c1"># Number of training examples.</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="c1"># When true we stop calculating the opAccuracytimum value of theta.</span>
+    <span class="c1"># When true we stop calculating the value of theta.</span>
     <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
     
     <span class="c1"># We declare convergence if J(theta) decreases by less than below.</span>
@@ -13181,29 +13224,27 @@ div#notebook {
     
     <span class="c1"># Assign theta to be a value of 0s initially.</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-    <span class="c1"># There should be as many thetas as features.</span>
-    
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>    
     
     <span class="c1"># Need to add ones to X</span>
     <span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">))</span>
     
-    <span class="c1"># Append the columns of ones to x</span>
+    <span class="c1"># Append the columns of ones to x. This represents the bias.</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ones</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>        
     
+    <span class="c1"># Perform gradient descent.</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iters</span><span class="p">):</span>
         
         <span class="c1"># Output if the maximum number of iterations has been reached.</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">max_iters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The maximum number of iterations has been reached!&quot;</span><span class="p">)</span>
         
-        <span class="c1"># Need to copy theta</span>
         <span class="n">prev_theta</span> <span class="o">=</span> <span class="n">theta</span>
     
-        
+        <span class="c1"># Update the cost and theta.</span>
         <span class="n">cost</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">cost_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">regularization</span><span class="p">,</span> <span class="n">logistic</span><span class="p">)</span>
     
-        
+        <span class="c1"># Stop the gradient descent algorithm if we have converged.</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">((</span><span class="n">theta</span> <span class="o">-</span> <span class="n">prev_theta</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">convergence</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Converged!&quot;</span><span class="p">)</span>
             <span class="k">break</span>            
@@ -13215,6 +13256,17 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Overfitting-and-Underfitting">Overfitting and Underfitting<a class="anchor-link" href="#Overfitting-and-Underfitting">&#182;</a></h3><p>Sometimes when we carry out gradient descent in order to obtain a value of theta which models our data the model may not be as accurate as it can be. This is due to two reasons overfitting and underfitting.</p>
+<p>Underfitting is when our computed model does not fit our data and leads to inaccuracy in the training and testing examples. When this happens we may need to add more features to gain insight into the data, change or model or implement feature scaling.</p>
+<p>Overfittting is when our computed model fits our training examples so will it does not generalise to our testing examples. To overcome this we use regularization.</p>
+<h4 id="Regularization">Regularization<a class="anchor-link" href="#Regularization">&#182;</a></h4><p>Regularization adds an additional penalty to ensure coefficients do not take exterme values. We do not perform regularization on the bias.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -13275,13 +13327,23 @@ Converged!
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="The-Decision-Boundary">The Decision Boundary<a class="anchor-link" href="#The-Decision-Boundary">&#182;</a></h3><p>I have told you what logistic regression is but not how to convert the hypothesis into a given class. We say the hypothesis belongs to the positive class if the value is greater than 0.5 and we say the hypothesis belongs to the negative class is the value is less than 0.5.</p>
+<p>The set of values in which the hypothesis computed is exactly 0.5 is called the decision boundary.</p>
+<p><img src="https://miro.medium.com/max/1012/1*i_oYgWjPbXbg3Z2uQLAmtw.png" alt="The decision boundaries"></p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[309]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">predict_class</span><span class="p">(</span><span class="n">prob</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Returns an array of the hypothesis.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Converts the hypothesis from a probability to a class.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">prob</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
