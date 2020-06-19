@@ -20,7 +20,7 @@
 
         <p>Top trumps is a multiplayer card game. The point of the game is to name a piece of data about the given
         card which 'trumps' other players piece of data. The person who wins that round keeps the other cards.
-        The last person standing wins the game. There are differen types of top trump card packs you can buy whether it's
+        The last person standing wins the game. There are different types of top trump card packs you can buy whether it's
         Top Gear Top Trumps or Football Top Trumps. </p>
 
         <img class="image-width img-responsive" src="top_gear_top_trumps.jpg" />
@@ -28,14 +28,14 @@
         <br />
 
         <p>I developed the application using React-Native as the front end and spring boot as the back end of the
-        application. I developed an API so that the front end could request cards from the API. Additionally, the
-        front end could add a deck to the list of decks stored in the database. </p>
+        application. I developed an API so that the front end could request cards from the API. Additionally, this way the
+        front end can add a deck to the list of decks stored in the database. </p>
 
         <h2>Web Scraping</h2>
 
         <p>To create the application I need a lot of data about different football players in different leagues. This
         was a problem as APIs do exist to retrieve data about football statistics but they require you to pay for them.
-        So I instead gathered the data myself using a technique called web scrape. I developed the Web Scraping script
+        So I instead gathered the data myself using a technique called web scraping. I developed the Web Scraping script
         in Java using JSoup which allows you to query a HTML document using regular expressions to extract key information
         from it.</p>
 
@@ -46,10 +46,10 @@
         <p>
             I used the website <a href="https://www.fbref.com">FBREF</a> to extract information about the players this
             current season. Using this website I have access to most leagues in the world including leagues such as the
-            Ukranian Premier League (maybe not the Scottish Premiership).
+            Ukrainian Premier League (maybe not the Scottish Premiership).
 
             Using this website as a template I extract information about players from the English Premier League, the
-            Championship, Bundesliga and Serie A. I can add more league at any point as my script can extract information
+            Championship, Bundesliga and Serie A. I can add more leagues at any point as my script can extract information
             from any league on the site.
         </p>
 
@@ -64,8 +64,6 @@
             <li>The number of starts the player has.</li>
             <li>The number of minutes the player has played.</li>
         </ul>
-
-        <h2></h2>
 
         <h2>Using a NoSQL database (MongoDB)</h2>
 
@@ -85,18 +83,15 @@
 
         <br />
 
-        <p>Instead of using a ERD diagram to demonstrates relations in my database it is better to use a UML diagram.
+        <p>Instead of using a ERD diagram to demonstrate relations in my database it is better to use a UML diagram.
         As I am using a document store and the data in the objects are essentially PoJos. There are two collections in
         the database Players and Decks. The Players collection stores all the Player documents. Each player document has
-        a id which uniquely identifies the player.
+        an id which uniquely identifies the player.
 
         <p>The other collection is the Decks collection, which stores all of the Decks documents. A deck models a top
-        trumps deck. I designed my program so that users can create their own decks hence we need to be able to add
+        trumps deck. I designed my program so that users can create their own decks. Therefore we need to be able to add
         new decks to the MongoDB database as well as view them. The Deck document has an attribute titled 'players'. This
-        is an array of UUID where each UUID corresponds to a Player in the Players collection.</p>
-
-
-
+        is an array of UUIDs where each UUID corresponds to a Player in the Players collection.</p>
 
         <h2>Spring Boot</h2>
 
@@ -144,31 +139,41 @@
 
         <h3>Adding Decks to the Database</h3>
 
-        <p>There is one more command I created but as it does not produce a response I have not included it. Thre needs
-        to be a defined way of adding decks to the database. By using a PUT command with the localhost:8080/api/v1/decks/
-        endpoint and passing a JSON object of a deck adds a deck to the database. </p>
+        <p>There is one more command I created but as it does not produce a visual response I have not included it. Thre needs
+        to be a defined way of adding decks to the database. This is done by using a PUT command with the localhost:8080/api/v1/decks/
+        endpoint and passing a JSON object of a deck. </p>
 
         <h2>The Front End Implemented In React-Native</h2>
 
         <h3>UI Design</h3>
 
         <p>I implemented the front end using React Native which is similar to a React Web application, but the only difference
-        is that it is run on a device rather than manipulated with a DOM. Below is the design of the user interface for my application.</p>
+        is that it is runs on a device rather than manipulated with a DOM. Below is the design of the user interface for my application.</p>
 
         <img src="app_design.png" class="image-width2 img-responsive" />
 
         <br />
 
-        <p>As shown you can the app allows you to create your own decks, search for players, select decks and play games
+        <p>As shown you the app allows you to create your own decks, search for players, select decks and play games
         against other users.</p>
 
         <h3>The Actual App</h3>
 
-        <img src="final_app.png" class="image-width2 img-responsive" />
+        <img src="final_app.png" class="image-width3 img-responsive" />
 
+        <br />
 
+        <p>Above shows the final app design. The app requires each player to be in the same physical location. The winner
+        of a round presses the I won button. I decided to implement it this way as it makes it much more flexible. The users
+        can decide what stats Trumps other stats making the app much more flexible. </p>
 
+        <p>When a user presses the I won button, the other users lose the card and the app displays their next card. The winner
+        then gets the other user's cards.</p>
 
+        <h1>The End</h1>
+
+        <p>That is all for this week. Next week I will be learning more front end development. This is prompted by the fact all my
+        UIs look terrible.</p>
 
         <br />
 
