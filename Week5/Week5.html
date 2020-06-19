@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Week 5</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container justify-content-center">
+    <div class="my-auto">
+        <h1>Making Football Top Trumps In React Native and Spring Boot</h1>
+
+        <h2>What is Top Trumps?</h2>
+
+        <p>Top trumps is a multiplayer card game. The point of the game is to name a piece of data about the given
+        card which 'trumps' other players piece of data. The person who wins that round keeps the other cards.
+        The last person standing wins the game. There are differen types of top trump card packs you can buy whether it's
+        Top Gear Top Trumps or Football Top Trumps. </p>
+
+        <img class="image-width img-responsive" src="top_gear_top_trumps.jpg" />
+
+        <br />
+
+        <p>I developed the application using React-Native as the front end and spring boot as the back end of the
+        application. I developed an API so that the front end could request cards from the API. Additionally, the
+        front end could add a deck to the list of decks stored in the database. </p>
+
+        <h2>Web Scraping</h2>
+
+        <p>To create the application I need a lot of data about different football players in different leagues. This
+        was a problem as APIs do exist to retrieve data about football statistics but they require you to pay for them.
+        So I instead gathered the data myself using a technique called web scrape. I developed the Web Scraping script
+        in Java using JSoup which allows you to query a HTML document using regular expressions to extract key information
+        from it.</p>
+
+        <img class="image-width2 img-responsive" src="fbref.png" />
+
+        <br />
+
+        <p>
+            I used the website <a href="https://www.fbref.com">FBREF</a> to extract information about the players this
+            current season. Using this website I have access to most leagues in the world including leagues such as the
+            Ukranian Premier League (maybe not the Scottish Premiership).
+
+            Using this website as a template I extract information about players from the English Premier League, the
+            Championship, Bundesliga and Serie A. I can add more league at any point as my script can extract information
+            from any league on the site.
+        </p>
+
+        <p>Once the data is gathered I save it to a JSON file. So that I can load the data into a database. </p>
+
+        <p>From the FBREF website I extract the following key attributes: </p>
+
+        <ul>
+            <li>The number of goals the player has scored.</li>
+            <li>The number of assists the player has got.</li>
+            <li>The number of yellow and red cards the player has.</li>
+            <li>The number of starts the player has.</li>
+            <li>The number of minutes the player has played.</li>
+        </ul>
+
+        <h2></h2>
+
+        <h2>Using a NoSQL database (MongoDB)</h2>
+
+        <p>Once the data is gathered I need to load it into a database for the API. I decided to use a document store
+        to store each player's data. I used a document store as it consists of documents which a syntactically similar to
+        JSON. Additionally it is flexible as it does not require a rigid schema like that of an SQL database meaning I can
+        give cards special attributes if I require. Or I can add new attributes to cards without making previous cards
+        incompatible.</p>
+
+        <p>Below is the result from a query in MongoDB:</p>
+
+        <img class="image-width img-responsive" src="mongodb.png" />
+
+
+        <h2>Spring Boot</h2>
+
+        <p>As I explained earlier I created a backend for the application in Spring Boot. Spring Boot is a Java
+        framework which makes it easy to build and deploy a RESTful service in Java. In my model the client can either
+        make a GET or POST request to the HTTP web server. </p>
+
+        <br />
+
+        <br />
+        <br />
+
+
+
+
+    </div>
+
+</body>
+</html>
