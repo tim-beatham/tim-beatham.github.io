@@ -77,14 +77,33 @@
 
         <p>Below is the result from a query in MongoDB:</p>
 
-        <img class="image-width img-responsive" src="mongodb.png" />
+        <img class="image-width2 img-responsive" src="mongodb.png" />
+
+        <h2>The PoJos (Plain Old Java Objects) To Model The Entities</h2>
+
+        <img class="image-width img-responsive" src="Football_PoJos.png" />
+
+        <br />
+
+        <p>Instead of using a ERD diagram to demonstrates relations in my database it is better to use a UML diagram.
+        As I am using a document store and the data in the objects are essentially PoJos. There are two collections in
+        the database Players and Decks. The Players collection stores all the Player documents. Each player document has
+        a id which uniquely identifies the player.
+
+        <p>The other collection is the Decks collection, which stores all of the Decks documents. A deck models a top
+        trumps deck. I designed my program so that users can create their own decks hence we need to be able to add
+        new decks to the MongoDB database as well as view them. The Deck document has an attribute titled 'players'. This
+        is an array of UUID where each UUID corresponds to a Player in the Players collection.</p>
+
+
 
 
         <h2>Spring Boot</h2>
 
         <p>As I explained earlier I created a backend for the application in Spring Boot. Spring Boot is a Java
         framework which makes it easy to build and deploy a RESTful service in Java. In my model the client can either
-        make a GET or POST request to the HTTP web server. </p>
+        make a GET or POST request to the HTTP web server. The HTTP web server makes a JSON response to the get command. </p>
+
 
         <br />
 
