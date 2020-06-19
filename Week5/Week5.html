@@ -105,6 +105,71 @@
         make a GET or POST request to the HTTP web server. The HTTP web server makes a JSON response to the get command. </p>
 
 
+        <h3>Get All Players</h3>
+
+        <img src="get_all_players.png" class="image-width2 img-responsive" />
+
+        <br />
+
+        <p>As shown I can make a query to my API to get all players in the database. This does not require any
+        parameters to perform. </p>
+
+
+        <h3>Get Player By ID</h3>
+
+        <img src="get_player_by_id.png" class="image-width2 img-responsive" />
+
+        <br />
+
+        <p>Above shows how to get a specific player using my API. By passing the id in the url the springboot server
+        fetches the required player.</p>
+
+        <h3>Get Players By Query</h3>
+
+        <img src="get_players_query.png" class="image-width2 img-responsive" />
+
+        <br />
+
+        <p>This is the most complicated command I created in my spring boot server. As shown by specifying attributes
+        and either the following logical operators >, < or = seperated by commas you can fetch a list of players conforming
+        to these rules. The commas in the parameter represent the logical AND operator.</p>
+
+        <h3>Get All Decks</h3>
+
+        <img src="get_all_decks.png" class="image-width2 img-responsive" />
+
+        <br />
+
+        <p>This command simply fetches all the decks in the decks collection.</p>
+
+        <h3>Adding Decks to the Database</h3>
+
+        <p>There is one more command I created but as it does not produce a response I have not included it. Thre needs
+        to be a defined way of adding decks to the database. By using a PUT command with the localhost:8080/api/v1/decks/
+        endpoint and passing a JSON object of a deck adds a deck to the database. </p>
+
+        <h2>The Front End Implemented In React-Native</h2>
+
+        <h3>UI Design</h3>
+
+        <p>I implemented the front end using React Native which is similar to a React Web application, but the only difference
+        is that it is run on a device rather than manipulated with a DOM. Below is the design of the user interface for my application.</p>
+
+        <img src="app_design.png" class="image-width2 img-responsive" />
+
+        <br />
+
+        <p>As shown you can the app allows you to create your own decks, search for players, select decks and play games
+        against other users.</p>
+
+        <h3>The Actual App</h3>
+
+        <img src="final_app.png" class="image-width2 img-responsive" />
+
+
+
+
+
         <br />
 
         <br />
