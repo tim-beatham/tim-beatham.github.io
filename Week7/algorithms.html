@@ -13419,7 +13419,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Heap</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">cs</span><span class="o">.</span><span class="n">auckland</span><span class="o">.</span><span class="n">ac</span><span class="o">.</span><span class="n">nz</span><span class="o">/</span><span class="n">software</span><span class="o">/</span><span class="n">AlgAnim</span><span class="o">/</span><span class="n">fig</span><span class="o">/</span><span class="n">AVL_bal</span><span class="o">.</span><span class="n">gifclass</span> <span class="n">Heap</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">starting_elements</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">heap</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">starting_elements</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">heap_sort</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heap</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -13506,15 +13506,16 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[186]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lNode</span><span class="p">,</span> <span class="n">rNode</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lNode</span> <span class="o">=</span> <span class="n">lNode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rNode</span> <span class="o">=</span> <span class="n">rNode</span>
-        
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lNode</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rNode</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">element</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
         
     <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span>
@@ -13531,42 +13532,154 @@ div#notebook {
         
     <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">starting_element</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">starting_element</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">starting_element</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_node_traverse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">starting_element</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+
+            
+
+    <span class="k">def</span> <span class="nf">is_balanced</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_node</span><span class="p">):</span>
+    
+        <span class="n">left_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span><span class="o">.</span><span class="n">depth</span>
+        <span class="n">right_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span><span class="o">.</span><span class="n">depth</span>
+        
+        <span class="c1"># If negative then we know it is right heavy</span>
+        <span class="c1"># If positive then we know it i left heavy.</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span><span class="n">left_depth</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">right_depth</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">left_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_node</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">current_node</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span>
+        
+        <span class="c1"># Change Q to be the current node</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">q</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">starting_element</span><span class="p">:</span>
+            <span class="c1"># Don&#39;t change the starting element</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">starting_element</span> <span class="o">=</span> <span class="n">q</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="k">if</span> <span class="n">q</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lNode</span> <span class="o">==</span> <span class="n">p</span><span class="p">:</span>
+                <span class="n">q</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lNode</span> <span class="o">=</span> <span class="n">q</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">q</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">rNode</span> <span class="o">=</span> <span class="n">q</span>
+            
+      
+            
+        
+        <span class="c1"># Now we need to change the left and right pointers</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">rNode</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">lNode</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">lNode</span> <span class="o">=</span> <span class="n">p</span>
+        
+        <span class="c1"># Now we need to change the depths. </span>
+        <span class="n">p_lchild_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">lNode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">p</span><span class="o">.</span><span class="n">lNode</span><span class="o">.</span><span class="n">depth</span>
+        <span class="n">p_rchild_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">rNode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">p</span><span class="o">.</span><span class="n">rNode</span><span class="o">.</span><span class="n">depth</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">p_lchild_depth</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">p_rchild_depth</span><span class="p">)</span>
+        
+        <span class="n">q_rchild_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">q</span><span class="o">.</span><span class="n">rNode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">q</span><span class="o">.</span><span class="n">rNode</span><span class="o">.</span><span class="n">depth</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">q</span><span class="o">.</span><span class="n">lNode</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">q_rchild_depth</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">right_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_node</span><span class="p">):</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">current_node</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span>
+        
+        <span class="n">p</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">p</span>
+        
+        <span class="k">if</span> <span class="n">q</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">starting_element</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">starting_element</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lNode</span> <span class="o">==</span> <span class="n">q</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lNode</span> <span class="o">=</span> <span class="n">p</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">rNode</span> <span class="o">=</span> <span class="n">p</span>
+        
+            
+        <span class="n">q</span><span class="o">.</span><span class="n">lNode</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rNode</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">rNode</span> <span class="o">=</span> <span class="n">q</span>
+        
+        <span class="c1"># Update the depths</span>
+        <span class="n">q_lchild_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">q</span><span class="o">.</span><span class="n">lNode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">q</span><span class="o">.</span><span class="n">lNode</span><span class="o">.</span><span class="n">depth</span>
+        <span class="n">q_rchild_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">q</span><span class="o">.</span><span class="n">rNode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">q</span><span class="o">.</span><span class="n">rNode</span><span class="o">.</span><span class="n">depth</span>
+            
+        <span class="n">q</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">q_lchild_depth</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">q_rchild_depth</span><span class="p">)</span>
+        
+        <span class="n">p_lchild_depth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">lNode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">p</span><span class="o">.</span><span class="n">lNode</span><span class="o">.</span><span class="n">depth</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">p_lchild_depth</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">rNode</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>                      
+        
     
     <span class="k">def</span> <span class="nf">add_node_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_node</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">element</span> <span class="o">&lt;=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">get_data</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">add_node_traverse</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+                    <span class="n">current_node</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span><span class="o">.</span><span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                    
+                    
                 <span class="k">else</span><span class="p">:</span> <span class="c1"># Found the point to add the node</span>
-                    <span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>                  
+                    <span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                    <span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">current_node</span>
+                    <span class="n">current_node</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>
+                    
+                    
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">add_node_traverse</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+                    <span class="n">current_node</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span><span class="o">.</span><span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                       
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+                    <span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                    <span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">current_node</span>
+                    <span class="n">current_node</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>
+                    
+            <span class="c1"># Then we need to rebalance the tree</span>
+            <span class="k">if</span> <span class="n">current_node</span><span class="o">.</span><span class="n">depth</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_balanced</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># Left heavy</span>
+                    <span class="c1"># Check the left child </span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_balanced</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="c1"># Left left case</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># Left right case</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">lNode</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_balanced</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># Right heavy</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_balanced</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="c1"># Right right case</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># Right left case</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">rNode</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span>
+          
+                
+                    
                     
     <span class="k">def</span> <span class="nf">in_order_traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">ordered_list</span><span class="o">=</span><span class="p">[]):</span>
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">lNode</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">ordered_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_order_traverse</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">lNode</span><span class="p">)</span>
             
-        <span class="n">ordered_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get_data</span><span class="p">())</span>
+        <span class="n">ordered_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">rNode</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">ordered_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_order_traverse</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">rNode</span><span class="p">)</span>
             
         <span class="k">return</span> <span class="n">ordered_list</span>
-            
-            
-<span class="n">elements</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+           
+<span class="n">elements</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
 
 <span class="n">binTree</span> <span class="o">=</span> <span class="n">BinaryTree</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
     <span class="n">binTree</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
             
-<span class="n">binTree</span><span class="o">.</span><span class="n">in_order_traverse</span><span class="p">(</span><span class="n">binTree</span><span class="o">.</span><span class="n">starting_element</span><span class="p">)</span>        
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">binTree</span><span class="o">.</span><span class="n">in_order_traverse</span><span class="p">(</span><span class="n">binTree</span><span class="o">.</span><span class="n">starting_element</span><span class="p">)</span> 
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Element:&quot;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;Depth&quot;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="s2">&quot;LPointer&quot;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">lNode</span><span class="o">.</span><span class="n">element</span> <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">lNode</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> 
+                          <span class="s2">&quot;RPointer&quot;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">rNode</span><span class="o">.</span><span class="n">element</span> <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">rNode</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="s2">&quot;Parent&quot;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">element</span> <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    
 </pre></div>
 
     </div>
@@ -13579,15 +13692,19 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[83]:</div>
+    <div class="prompt"></div>
 
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[1, 5, 6, 9, 10, 22, 50]</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Element: 1 Depth 0 LPointer -1 RPointer -1 Parent 2
+Element: 2 Depth 1 LPointer 1 RPointer 3 Parent 4
+Element: 3 Depth 0 LPointer -1 RPointer -1 Parent 4
+Element: 4 Depth 2 LPointer 2 RPointer 6 Parent -1
+Element: 5 Depth 0 LPointer -1 RPointer -1 Parent 6
+Element: 6 Depth 1 LPointer 5 RPointer 7 Parent 4
+Element: 7 Depth 0 LPointer -1 RPointer -1 Parent 6
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -13604,6 +13721,7 @@ div#notebook {
 <p><img src="https://www.eecs.umich.edu/courses/eecs380/ALG/niemann/s_fig33.gif" alt="unbalanced binary tree"></p>
 <p>This binary tree would take O(n) to search (when the nodes are already in order). This is because when you are searching for an element you are always taking the path down the right node.</p>
 <p>Therefore we need to ensure we are building a balanced binary tree. This is where an AVL tree comes in.</p>
+<p>The time complexity for searching fir an element is O(h) where h is the height of the binary tree.</p>
 
 </div>
 </div>
@@ -13615,12 +13733,29 @@ div#notebook {
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above example of binary tree is actually an implementation of an AVL Tree. An implementation is balances itself after each insertion. This ensures that the time compleity is similar to O(log n) when finding an element.</p>
+<p>AVL ensures that no node can have left and right subtrees that have a height difference greater than one. There are otherwise to ensure a balanced tree but this is by far the easiest.</p>
+<p><img src="https://www.cs.auckland.ac.nz/software/AlgAnim/fig/AVL_bal.gif" alt="AVL tree"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Counting-Sort-&amp;-Radix-Sort">Counting Sort &amp; Radix Sort<a class="anchor-link" href="#Counting-Sort-&amp;-Radix-Sort">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[187]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Add code here</span>
 </pre></div>
 
     </div>
