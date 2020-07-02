@@ -13746,16 +13746,76 @@ Element: 7 Depth 0 LPointer -1 RPointer -1 Parent 6
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Counting-Sort-&amp;-Radix-Sort">Counting Sort &amp; Radix Sort<a class="anchor-link" href="#Counting-Sort-&amp;-Radix-Sort">&#182;</a></h2>
+<h2 id="The-Comparison-Model">The Comparison Model<a class="anchor-link" href="#The-Comparison-Model">&#182;</a></h2><p>In the comparison model we assume that memory is random access. That is we can access any element in a list under O(1) time complexity.</p>
+<p>In the comparison model we also assume that comparing two elements takes O(1) time complexity.</p>
+<p>Using these assumptions we can derive the minimum time complexity for finding an element and sorting a list.</p>
+<h3 id="Decision-Trees">Decision Trees<a class="anchor-link" href="#Decision-Trees">&#182;</a></h3><p>Any comparison algorithm can be viewed as a tree of all possible comparisons, their outcomes and the resulting answer of any particular n.</p>
+<p><img src="https://bcs.whfreeman.com/webpub/mathematics/gersting7e/chapter%206/section6-3/problem1/images/page5.gif" alt="an example of a decision tree"></p>
+<h4 id="Searching-Lower-Bound">Searching Lower Bound<a class="anchor-link" href="#Searching-Lower-Bound">&#182;</a></h4><p>We can prove that for n sorted items finding a given item among them in the comparison model requires O(lg n) time complexity.</p>
+<h4 id="Proof">Proof<a class="anchor-link" href="#Proof">&#182;</a></h4><ul>
+<li><p>A decision tree is binary and the decision tree must have greater or equal to n leaves. Where n is the size of the list.</p>
+</li>
+<li><p>This implies that the height is greater or equal to lg n. Which concludes the proof.</p>
+</li>
+</ul>
+<h4 id="Sorting-Lower-Bound">Sorting Lower Bound<a class="anchor-link" href="#Sorting-Lower-Bound">&#182;</a></h4><p>We can prove that a comparison model the time complexity of sorting a list is at least O(nlogn)</p>
+<h4 id="Proof">Proof<a class="anchor-link" href="#Proof">&#182;</a></h4><p><img src="https://tim-beatham.github.io/Week7/comparison_sort_time.jpg" alt="comparison sort time complexity"></p>
+<p>Above is a proof of the time complexity for sorting elements using the comparison sort model.</p>
+<p>Please attempt to ignore my dodgey handwriting.</p>
+<p>I have also in the proof forgotten to add the end of proof symbol but oh well.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Linear-Time-Sort-(Integer-Sorting)">Linear-Time Sort (Integer Sorting)<a class="anchor-link" href="#Linear-Time-Sort-(Integer-Sorting)">&#182;</a></h2><p>Using different assumptions we can however achieve sorting which has a time complexity of at best O(n) time complexity which is much better than O(nlgn) time complexity.</p>
+<ul>
+<li>Assume we are sorting n keys of integers {0, 1, ..., k - 1} and each element fits into one word.</li>
+<li>By using the above assumptions we can add, subtract and compare numbers in O(1) time complexity. </li>
+</ul>
+<p>Using this assumptions we can achieve at best O(n) time complexity in reality however it is quite a bit worse than this but we can set it up to be better than O(nlgn) time complexity.</p>
+<h3 id="Counting-Sort">Counting Sort<a class="anchor-link" href="#Counting-Sort">&#182;</a></h3><p>Counting sort assumes the key we use for sorting are between a specified range.</p>
+<p>Counting sort works by:</p>
+<ul>
+<li>Instantiating a list (L) of size k, where k is the maximum range of the list. </li>
+<li>Iterating over each element list (l) and adding one to the corresponding list (L). That is L[l[i]] += 1.</li>
+</ul>
+<p>From this we can sort the list.</p>
+<p>The time complexity of counting sort is O(n + k). Where k is the range of the input.</p>
+<p>This could be a problem if the range of the input is n^2 as it means the time complexity is O(n^2) which is worse than the comparison model version.</p>
+<h3 id="Radix-Sort">Radix Sort<a class="anchor-link" href="#Radix-Sort">&#182;</a></h3><p>Radix sort is in essense an extension of counting sort. It uses counting sort as a subroutine.</p>
+<p>In Radix sort we sort elements digit by digit from the least significant digit to the most significant digit.</p>
+<p>This has time complexity O(d * (n + b)) where b is the base representing the numbers and d is the maximum number of digits.</p>
+<p>In the decimal system d is O(logb k). Meaning the overall time complexity is O((n + b) * logb k) which is worse than a comparison model version.</p>
+<p>If we assume k &lt;= n^c then the time complexity becomes O( (n + b) * clogb n) which is equal to O(nlogb n).</p>
+<p>This is still worse than a comparsion model.</p>
+<p>If we also assume that the base we are using is that of b = n we can achieve O(n) time complexity:</p>
+<p>O ( (n + n) <em> clogn n) = O(2n </em> c) = O(n) time complexity.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[187]:</div>
+<div class="prompt input_prompt">In&nbsp;[190]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Add code here</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Implementing Counting Sort</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[189]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Implementing Radix Sort</span>
 </pre></div>
 
     </div>
