@@ -13938,21 +13938,79 @@ Element: 7 Depth 0 LPointer -1 RPointer -1 Parent 6
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Hashing-With-Chaining">Hashing With Chaining<a class="anchor-link" href="#Hashing-With-Chaining">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Table-Doubling,-Karp-Rabin">Table Doubling, Karp-Rabin<a class="anchor-link" href="#Table-Doubling,-Karp-Rabin">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Open-Addressing,-Cryptographic-Hashing">Open Addressing, Cryptographic Hashing<a class="anchor-link" href="#Open-Addressing,-Cryptographic-Hashing">&#182;</a></h2>
+<h2 id="Hashing">Hashing<a class="anchor-link" href="#Hashing">&#182;</a></h2><p>Balanced binary search trees are able to find an element in 0(lg n) time.</p>
+<p>Is it possible to achieve time complexity for finding an element?</p>
+<p>Yes it is we can achieve this in a Random Access Model through the use of hashing.</p>
+<p>In essense we convert a key into a memory address by passing it to a hash function we then store the data at that memory address in the hash table Then when we need to find the element in the hash table we apply the hash function to the key again and look at the specified memory location. This takes O(1) time.</p>
+<h3 id="Direct-Access-Table">Direct Access Table<a class="anchor-link" href="#Direct-Access-Table">&#182;</a></h3><p>The easiest way to implement hashing is through a direct access table. In a direct access table the number of cells we have in the table is equal to the range of the keys we are storing in the table.</p>
+<p>This however has some fundamental problems:</p>
+<ol>
+<li>The keys have to be non negative integers.</li>
+<li>If you have a large key range it requires a lot of space to store the data structure.</li>
+<li>A lot of space may potentially be wasted.</li>
+</ol>
+<h4 id="Pre-Hash">Pre-Hash<a class="anchor-link" href="#Pre-Hash">&#182;</a></h4><p>This is where I introduce a prehash function. A prehash function converts a key to a non negative integer. In Python this is the hash() function (which is actually a pre-hash function), in Java all objects inherit a hashCode() method (which is also a pre-hash function).</p>
+<p>In theory for two values x and y. If hash(x) == hash(y) then x = y for all x and y. However in practice this is not the case. Two valyes which hash to the same value is called a collision.</p>
+<p>Additionally pre-hash has the requirement that any operations on the data structure does not change the output of pre hash. If this was not the case the same object stored in a hash table would not map to the same address later on in the execution of the program.</p>
+<h4 id="The-Size-Of-A-Hash-Table">The Size Of A Hash Table<a class="anchor-link" href="#The-Size-Of-A-Hash-Table">&#182;</a></h4><p>To fix problem 2 &amp; 3 we simply reducing the universe of all the keys down to a reasonable size. Usually we pick a starting size of the table that equals the number of keys.</p>
+<p>If we do this it is highly probable that two distinct keys will collide. We can solve this two ways via chaining and via Open Addressing.</p>
+<h3 id="Chaining">Chaining<a class="anchor-link" href="#Chaining">&#182;</a></h3><p>In the chaining method the hash table is arranged as a table of linked lists. When we insert an element into the hash table if it is none then we create a new linked list of one element.</p>
+<p>If a collision occurs then we simply add the element to the end of the linked list at the corresponding location in the hash table.</p>
+<p>Using this method the worse case time complexity is O(n) time complexity. But in practice it is highly unlikley that this happens.</p>
+<h4 id="Simple-Uniform-Hashing">Simple Uniform Hashing<a class="anchor-link" href="#Simple-Uniform-Hashing">&#182;</a></h4><p>We assume each key is equally likely to be hash to any slot of the table and independent of where other keys have been hashed to.</p>
+<p>This assumption is unlikely but it allows us to model the performance of the hash table.</p>
+<p>n = The number of keys stored in the table.
+m = The number of available slots in the table.</p>
+<p>load factor (alpha) = n/m = the expected keys per slot (expected length of a chain)</p>
+<p>If n is small compared to m then the length of the chain is low. When we have a small alpha value we have on average O(1) time complexity.</p>
+<h4 id="Hash-Functions">Hash Functions<a class="anchor-link" href="#Hash-Functions">&#182;</a></h4><p>Two hash functions are as follows:</p>
+<h4 id="Division-Method">Division Method<a class="anchor-link" href="#Division-Method">&#182;</a></h4>
+<pre><code>H(k) = k mod m
+
+</code></pre>
+<p>For this to work m must be prime and not close to a power of 2 or 10.</p>
+<h4 id="Multiplication-Method">Multiplication Method<a class="anchor-link" href="#Multiplication-Method">&#182;</a></h4><p>H(k) = ( (a*k)mod 2^w ) &gt;&gt; (w - r)</p>
+<p>a is random
+k is w bits
+m = 2^r</p>
+<p>a must be odd and 2^w-1 &lt; a &lt; 2^w.
+a should not be close to 2^w-1 and 2^w however.</p>
+<p>This method works by multiplying the key by a random number and a subset of digits in the middle as the result.</p>
+<h4 id="Table-Doubling">Table Doubling<a class="anchor-link" href="#Table-Doubling">&#182;</a></h4><p>I explained we need to keep the load factor small to ensure on average the hash table has O(1) time complexity.</p>
+<p>But what happens if more and more keys are added meaning n is large compared to m.</p>
+<p>One techniue would be to add one more element after n = m to keep the load factor below 1. But what is the time complexity of doing this?</p>
+<p>Well inserting n keys would cost:</p>
+<p>O(1 + 2 + 3 + 4 + ... + n) = O(n^2) time complexity this is not what we want.</p>
+<p>An alternative approach is to double the table when n = m. This is called table doubling when we do this the cost of inserting n keys is:</p>
+<p>O(1 + 2 + 4 + 8 + ... + n) = O(n) time complexity. Additionally we need to expand the table every logn time. Therefore resulting in fewer expansions meaning we achieve O(1) time complexity on average.</p>
+<h4 id="Amortized-Analysis">Amortized Analysis<a class="anchor-link" href="#Amortized-Analysis">&#182;</a></h4><p>This is a common technique in data structures.</p>
+<p>T(n) amortized means T(n) on average over all operations.</p>
+<p>Inserting to a hash table is O(1) ammortized.</p>
+<h4 id="Deleting-Elements">Deleting Elements<a class="anchor-link" href="#Deleting-Elements">&#182;</a></h4><p>However when we delete elements we need to shrink the table. A simple approach would be to half the table when n = m/2. This has the problem that if we then add another element we need to grow the table again and then if we deleted that element we would need to shrink the table and if we kept doing this it would result in awful performance.</p>
+<p>The solution is to shrink the table when n = m / 4 and we shrink the table to m / 2. That way we do not have this problem.</p>
+<p>In Python lists use table doubling and therefore the operations list.append() and list.pop() are O(1) amortized.</p>
+<h4 id="String-Matching-and-Karp-Rabin">String Matching and Karp-Rabin<a class="anchor-link" href="#String-Matching-and-Karp-Rabin">&#182;</a></h4><p>One application of hashing is to find a substring inside another string. Without hashing we would iterate over the range (len(t) - len(s)) where t is the larger string and s is the substring and compare each slice t[i : i+ len(s)] with s.</p>
+<p>The time complexity of this is O(|s| * |t|).</p>
+<h4 id="Rolling-Hash">Rolling Hash<a class="anchor-link" href="#Rolling-Hash">&#182;</a></h4><p>To solve this problem we use a rolling hash. The rolling has object has two method append() and skip(). When we iterate over the larger string we want to remove the first character from the rolling hash and add the next character to the rolling hash. Then compare the hash code of the string s and the hashcode of the substring represented by rolling hash. If we find a collision we then compare the string s and the current substring if the two compare to be equal then we have found the substring s in the larger string t.</p>
+<h3 id="Open-Addressing">Open Addressing<a class="anchor-link" href="#Open-Addressing">&#182;</a></h3><p>Open Addressing is an alternative to chaining. Open addressing uses no chaining it stores all items in the table. There is one item per slot. Therefore m &gt;= n.</p>
+<p>We however modify the hash function. The hash function tells us the order of slots to prove for a key we don't just look at one slot.</p>
+<p>h : u x {0, 1, ..., m - 1} -&gt; {0, 1, ..., m - 1}</p>
+<p>In essense the hash has two parameters the key to hash and the trial count. When we hash an element we first call h(k, 0) where k is the key. If there is no element at the corresponding memory address we insert the element at that location and we are finished. However if there is an element in the specified memory address then we call h(k, 1) and so on until we have have either found an empty memory address or exhausted all of the possible keys.</p>
+<p>When searching for a key we call the hash function repeatedly incrementing the trial count until we find the key or we encounter a cell which is blank and then we stop.</p>
+<p>However we have a problem, if we delete an element then the search function of the hash table is left incorrect.
+When deleting an element it will say the cell is blank and would not carry on with the next trial count. Therefore when deleting an element we replace the address location with a flag say 'DELETED'. Then when we call the search method the search method knows to carry on looking and the insert method could add another element with the same hash at this location at a later date.</p>
+<h4 id="Probing-Strategies">Probing Strategies<a class="anchor-link" href="#Probing-Strategies">&#182;</a></h4><h4 id="Linear-Probing">Linear Probing<a class="anchor-link" href="#Linear-Probing">&#182;</a></h4><p>h (k, i) = ( h'(k) + i ) mod m</p>
+<p>h'(k) is an ordinary hash function.</p>
+<p>This produces trials from 0 to m - 1 but there is a huge problem with linear probing. Linear probing produces clusters of size O(log n). Which affects the average time complexity.</p>
+<h4 id="Double-Hashing">Double Hashing<a class="anchor-link" href="#Double-Hashing">&#182;</a></h4><p>h (k, i) = ( h1(k) + ih2(k) ) mod m</p>
+<p>h1(k) and h2(k) are two ordinary has functions.</p>
+<p>i = the trial count. In this case i has nothing to do with complex numbers so don't get confused with the notation.</p>
+<p>The hash function is guaranteed to hit all slots if h2(k) is relatively prime to m for all k.</p>
+<h4 id="Uniform-Hashing-Assumption">Uniform Hashing Assumption<a class="anchor-link" href="#Uniform-Hashing-Assumption">&#182;</a></h4><ul>
+<li>Each key is equally likely to have any one of the m! permutations as its probe sequence.</li>
+</ul>
+<p>Double hashing comes close to this assumption.</p>
+
 </div>
 </div>
 </div>
