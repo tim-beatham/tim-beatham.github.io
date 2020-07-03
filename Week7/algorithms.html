@@ -13090,7 +13090,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[153]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
@@ -13999,17 +13999,320 @@ a should not be close to 2^w-1 and 2^w however.</p>
 <p>When searching for a key we call the hash function repeatedly incrementing the trial count until we find the key or we encounter a cell which is blank and then we stop.</p>
 <p>However we have a problem, if we delete an element then the search function of the hash table is left incorrect.
 When deleting an element it will say the cell is blank and would not carry on with the next trial count. Therefore when deleting an element we replace the address location with a flag say 'DELETED'. Then when we call the search method the search method knows to carry on looking and the insert method could add another element with the same hash at this location at a later date.</p>
-<h4 id="Probing-Strategies">Probing Strategies<a class="anchor-link" href="#Probing-Strategies">&#182;</a></h4><h4 id="Linear-Probing">Linear Probing<a class="anchor-link" href="#Linear-Probing">&#182;</a></h4><p>h (k, i) = ( h'(k) + i ) mod m</p>
+<h4 id="Probing-Strategies">Probing Strategies<a class="anchor-link" href="#Probing-Strategies">&#182;</a></h4><h5 id="Linear-Probing">Linear Probing<a class="anchor-link" href="#Linear-Probing">&#182;</a></h5><p>h (k, i) = ( h'(k) + i ) mod m</p>
 <p>h'(k) is an ordinary hash function.</p>
 <p>This produces trials from 0 to m - 1 but there is a huge problem with linear probing. Linear probing produces clusters of size O(log n). Which affects the average time complexity.</p>
-<h4 id="Double-Hashing">Double Hashing<a class="anchor-link" href="#Double-Hashing">&#182;</a></h4><p>h (k, i) = ( h1(k) + ih2(k) ) mod m</p>
+<h5 id="Double-Hashing">Double Hashing<a class="anchor-link" href="#Double-Hashing">&#182;</a></h5><p>h (k, i) = ( h1(k) + ih2(k) ) mod m</p>
 <p>h1(k) and h2(k) are two ordinary has functions.</p>
 <p>i = the trial count. In this case i has nothing to do with complex numbers so don't get confused with the notation.</p>
 <p>The hash function is guaranteed to hit all slots if h2(k) is relatively prime to m for all k.</p>
-<h4 id="Uniform-Hashing-Assumption">Uniform Hashing Assumption<a class="anchor-link" href="#Uniform-Hashing-Assumption">&#182;</a></h4><ul>
+<h5 id="Uniform-Hashing-Assumption">Uniform Hashing Assumption<a class="anchor-link" href="#Uniform-Hashing-Assumption">&#182;</a></h5><ul>
 <li>Each key is equally likely to have any one of the m! permutations as its probe sequence.</li>
 </ul>
 <p>Double hashing comes close to this assumption.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[200]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Implementing a chain table.</span>
+<span class="c1"># Using the multiplication method:</span>
+<span class="c1"># https://www.cs.auckland.ac.nz/software/AlgAnim/hash_func.html</span>
+
+<span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataval</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nextval</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="kc">None</span>
+        
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="k">return</span>
+            
+        <span class="n">insertion_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end_point</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="n">insertion_point</span><span class="o">.</span><span class="n">nextval</span> <span class="o">=</span> <span class="n">node</span>
+            
+    <span class="k">def</span> <span class="nf">get_end_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_point</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">start_point</span><span class="o">.</span><span class="n">nextval</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">start_point</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end_point</span><span class="p">(</span><span class="n">start_point</span><span class="o">.</span><span class="n">nextval</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">element_in_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">start_point</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">start_point</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="k">if</span> <span class="n">start_point</span><span class="o">.</span><span class="n">dataval</span> <span class="o">==</span> <span class="n">element</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        
+        <span class="k">if</span> <span class="n">start_point</span><span class="o">.</span><span class="n">nextval</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_in_list</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">start_point</span><span class="o">.</span><span class="n">nextval</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">delete_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="c1"># Delete the head</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">dataval</span> <span class="o">==</span> <span class="n">element</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">nextval</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">nextval</span>
+                <span class="k">return</span> <span class="n">T</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="kc">None</span>
+            
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">nextval</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">current_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+            <span class="k">while</span> <span class="n">current_element</span><span class="o">.</span><span class="n">nextval</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Look a head </span>
+                <span class="k">if</span> <span class="n">current_element</span><span class="o">.</span><span class="n">nextval</span><span class="o">.</span><span class="n">dataval</span> <span class="o">==</span> <span class="n">element</span><span class="p">:</span>
+                    <span class="n">current_element</span><span class="o">.</span><span class="n">nextval</span> <span class="o">=</span> <span class="n">current_element</span><span class="o">.</span><span class="n">nextval</span><span class="o">.</span><span class="n">nextval</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+                
+                <span class="n">current_element</span> <span class="o">=</span> <span class="n">current_element</span><span class="o">.</span><span class="n">nextval</span>
+                
+        <span class="k">return</span> <span class="kc">False</span>
+                
+                    
+            
+    
+<span class="k">class</span> <span class="nc">ChainTable</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="p">[</span><span class="n">LinkedList</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_size</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="c1"># Just spammed random numbers</span>
+        <span class="c1"># Constant between 0 &lt; A &lt; 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multiplication_constant</span> <span class="o">=</span> <span class="mf">0.5887362348237</span>
+        
+    <span class="k">def</span> <span class="nf">get_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">table_size</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplication_constant</span>
+        <span class="k">return</span> <span class="n">floor</span><span class="p">(</span><span class="n">table_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">key</span> <span class="o">-</span> <span class="n">floor</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span> 
+    
+    <span class="k">def</span> <span class="nf">insert_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">inserting</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hash</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
+        <span class="n">linked_list</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span>
+        <span class="n">linked_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+       <span class="c1">## if self.num_elements &gt; 0.6 * len(self.table) and inserting == True:</span>
+        <span class="c1">##    self.grow_table()</span>
+        
+    <span class="k">def</span> <span class="nf">element_in_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hash</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">))</span>
+        
+        <span class="n">linked_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">linked_list</span><span class="o">.</span><span class="n">element_in_list</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">linked_list</span><span class="o">.</span><span class="n">head</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">copy_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">li</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">li</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">current_element</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">head</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">insert_element</span><span class="p">(</span><span class="n">current_element</span><span class="o">.</span><span class="n">dataval</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                                                
+            <span class="k">while</span> <span class="n">current_element</span><span class="o">.</span><span class="n">nextval</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">current_element</span> <span class="o">=</span> <span class="n">current_element</span><span class="o">.</span><span class="n">nextval</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">insert_element</span><span class="p">(</span><span class="n">current_element</span><span class="o">.</span><span class="n">dataval</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                
+    <span class="k">def</span> <span class="nf">grow_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="p">[</span><span class="n">LinkedList</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">))]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copy_table</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
+        
+    <span class="k">def</span> <span class="nf">delete_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hash</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">))</span>
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span>
+        <span class="n">temp_list</span><span class="o">.</span><span class="n">delete_element</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        
+        
+<span class="n">chain_table</span> <span class="o">=</span> <span class="n">ChainTable</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">chain_table</span><span class="o">.</span><span class="n">insert_element</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">,</span> <span class="n">chain_table</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+<span class="n">chain_table</span><span class="o">.</span><span class="n">insert_element</span><span class="p">(</span><span class="s2">&quot;bruh&quot;</span><span class="p">,</span> <span class="n">chain_table</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+<span class="n">chain_table</span><span class="o">.</span><span class="n">insert_element</span><span class="p">(</span><span class="s2">&quot;evening&quot;</span><span class="p">,</span> <span class="n">chain_table</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+<span class="n">chain_table</span><span class="o">.</span><span class="n">insert_element</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">chain_table</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+<span class="n">chain_table</span><span class="o">.</span><span class="n">element_in_table</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[200]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[148]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">alphabet_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+               <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+               <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+               <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+               <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+               <span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+               <span class="s1">&#39;g&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+               <span class="s1">&#39;h&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+               <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+               <span class="s1">&#39;j&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+               <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+               <span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+               <span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
+               <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+               <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+               <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+               <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
+               <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+               <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span>
+               <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+               <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span>
+               <span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+               <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+               <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
+               <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+               <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mi">26</span><span class="p">}</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Basic version of RobinKarp to demonstrate what it does.</span>
+<span class="sd">Only allows lower case ASCII. Simplified for demonstration</span>
+<span class="sd">purposes.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">RobinKarp</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">original_string</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prime</span> <span class="o">=</span> <span class="mi">11</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha_size</span> <span class="o">=</span> <span class="mi">256</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">substring</span> <span class="o">=</span> <span class="n">substring</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original_string</span> <span class="o">=</span> <span class="n">original_string</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash_substring</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">substring</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash_original_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original_string</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_pointer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_pointer</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">substring</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    
+        
+    <span class="k">def</span> <span class="nf">calculate_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="n">hash_val</span> <span class="o">=</span> <span class="mi">0</span>
+    
+        
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">substring</span><span class="p">)):</span>
+            <span class="n">hash_val</span> <span class="o">+=</span> <span class="p">((</span><span class="n">alphabet_map</span><span class="p">[</span><span class="n">string</span><span class="p">[</span><span class="n">m</span><span class="p">]])</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span> <span class="o">**</span> <span class="n">m</span><span class="p">)</span>
+
+            
+        <span class="k">return</span> <span class="n">hash_val</span>
+    
+    <span class="k">def</span> <span class="nf">recalculate_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash_original_string</span> <span class="o">-=</span> <span class="n">alphabet_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">original_string</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">left_pointer</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash_original_string</span> <span class="o">/=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_pointer</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_pointer</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash_original_string</span> <span class="o">+=</span> <span class="n">alphabet_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">original_string</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">right_pointer</span><span class="p">]]</span> <span class="o">*</span> \
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">prime</span> <span class="o">**</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">substring</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">robin_karp_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Compare the hash.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_substring</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_original_string</span><span class="p">:</span>
+            <span class="c1"># Potential find compare the substring</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_string</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">left_pointer</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_pointer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">substring</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    
+        <span class="k">while</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_pointer</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original_string</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">recalculate_hash</span><span class="p">()</span>
+            <span class="c1"># Compare the hash.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_substring</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_original_string</span><span class="p">:</span>
+                <span class="c1"># Potential find compare the substring</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_string</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">left_pointer</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_pointer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">substring</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+                
+            
+                
+                
+        <span class="k">return</span> <span class="kc">False</span>        
+    
+<span class="n">karp</span> <span class="o">=</span> <span class="n">RobinKarp</span><span class="p">(</span><span class="s2">&quot;tim&quot;</span><span class="p">,</span> <span class="s2">&quot;ylimbruhtim&quot;</span><span class="p">)</span>
+<span class="n">karp</span><span class="o">.</span><span class="n">robin_karp_loop</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[148]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Graphs">Graphs<a class="anchor-link" href="#Graphs">&#182;</a></h2><h3 id="Dijikstra's-Algorithm">Dijikstra's Algorithm<a class="anchor-link" href="#Dijikstra's-Algorithm">&#182;</a></h3><p>!!!Insert stuff here!!!</p>
+<h3 id="A*-Algorithm">A* Algorithm<a class="anchor-link" href="#A*-Algorithm">&#182;</a></h3><p>!!!Insert stuff here!!!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="That's-It">That's It<a class="anchor-link" href="#That's-It">&#182;</a></h1><p>Pubs are open so get yourself a pint after putting up with my waffling. I'm not going to bother to tell you what I'm doing next week as I always change my mind.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Guinness.jpg/170px-Guinness.jpg" alt="guiness"></p>
 
 </div>
 </div>
