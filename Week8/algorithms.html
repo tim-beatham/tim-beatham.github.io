@@ -13107,7 +13107,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">heapq</span>
@@ -13164,7 +13164,7 @@ div#notebook {
     <span class="c1"># Convert the priority queue to a heap</span>
     <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">priority_queue</span><span class="p">)</span>
     
-    <span class="n">visited_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">visited_nodes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     
     <span class="c1"># Add the start point to the queue</span>
     <span class="c1"># Get the last element in the priority queue.</span>
@@ -13175,11 +13175,11 @@ div#notebook {
         <span class="n">connected_nodes</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         
         <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">connected_nodes</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited_nodes</span> <span class="ow">and</span> <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span><span class="p">:</span>
                 <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span>
                 <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;prev_node&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                 
-        <span class="n">visited_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">visited_nodes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         
 
         <span class="k">del</span> <span class="n">remaining_nodes</span><span class="p">[</span><span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
@@ -13227,19 +13227,154 @@ F {&#39;distance&#39;: 9, &#39;prev_node&#39;: &#39;D&#39;}
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="An-Extension-of-Dijikstra's-Algorithm">An Extension of Dijikstra's Algorithm<a class="anchor-link" href="#An-Extension-of-Dijikstra's-Algorithm">&#182;</a></h2>
+<h2 id="Optimizing-Dijikstra's-Algorithm">Optimizing Dijikstra's Algorithm<a class="anchor-link" href="#Optimizing-Dijikstra's-Algorithm">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Dijikstra's algorithm can be optimized so that in practice it runs a lot faster.</p>
+<p>The speedup techniques below will not change worst-case behaviour. But causes the algorithm to speed up in practice by reducing the number of vertices visited.</p>
+<h3 id="Single-Source-Single-Target">Single Source Single Target<a class="anchor-link" href="#Single-Source-Single-Target">&#182;</a></h3><p>One way to improve the performance of Dijikstra's algorithm is to stop when we have visited the destination node. At this point we can stop as we do not need to know the most efficient route to the other nodes.</p>
+<h3 id="Bi-Directional-Search">Bi-Directional Search<a class="anchor-link" href="#Bi-Directional-Search">&#182;</a></h3><p>Using a single target destination we can speed up Dijikstra's algorithm even further.</p>
+<p>In bi-directional search we alternate search from source and backward searching from the destination.
+When we remove an element from the queue that has already been visited by the other search then we stop.
+When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
+<h3 id="Goal-Directed-Search-or-A*-Algorithm">Goal-Directed Search or A* Algorithm<a class="anchor-link" href="#Goal-Directed-Search-or-A*-Algorithm">&#182;</a></h3><p>In goal-directed search we add a heuristic function ensure that we always take the node which is likely to be part of the path to the destination.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[94]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Implementing Bi-Directional Search</span>
+<span class="k">def</span> <span class="nf">bi_directional_search</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+    <span class="n">forward_distances</span> <span class="o">=</span> <span class="p">{</span><span class="n">vertex</span><span class="p">:{</span><span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span> <span class="s1">&#39;prev_node&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+    <span class="n">backward_distances</span> <span class="o">=</span> <span class="p">{</span><span class="n">vertex</span><span class="p">:{</span><span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span> <span class="s1">&#39;prev_node&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+    
+    <span class="n">forward_distances</span><span class="p">[</span><span class="n">source</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">backward_distances</span><span class="p">[</span><span class="n">destination</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">remaining_forward</span> <span class="o">=</span> <span class="n">forward_distances</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">remaining_backward</span> <span class="o">=</span> <span class="n">backward_distances</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="n">forward_priority_queue</span> <span class="o">=</span> <span class="p">[(</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">],</span> <span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">forward_distances</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+    <span class="n">backward_priority_queue</span> <span class="o">=</span> <span class="p">[(</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">],</span> <span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">backward_distances</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+    
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">forward_priority_queue</span><span class="p">)</span>
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">backward_priority_queue</span><span class="p">)</span>
+    
+    <span class="n">visited_forward</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">visited_backward</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    
+    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+    
+    <span class="n">is_forward</span> <span class="o">=</span> <span class="kc">True</span>
+    
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">backward_priority_queue</span><span class="p">)</span>
+        <span class="n">current_node</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">forward_priority_queue</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_forward</span> <span class="k">else</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">backward_priority_queue</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_forward</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current Node&quot;</span><span class="p">,</span> <span class="n">current_node</span><span class="p">)</span>
+            
+        <span class="nb">print</span><span class="p">(</span><span class="n">visited_forward</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">visited_backward</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">visited_forward</span> <span class="ow">or</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">visited_backward</span><span class="p">:</span>
+            <span class="k">break</span>
+            
+        <span class="c1"># Get adjacent nodes.</span>
+        <span class="n">connected_nodes</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">forward_distances</span> <span class="k">if</span> <span class="n">is_forward</span> <span class="k">else</span> <span class="n">backward_distances</span>
+        
+        <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">connected_nodes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span><span class="p">:</span>
+                <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span>
+                <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;prev_node&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                
+        <span class="k">if</span> <span class="n">is_forward</span><span class="p">:</span> 
+            <span class="k">del</span> <span class="n">remaining_forward</span><span class="p">[</span><span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">forward_priority_queue</span><span class="p">)</span>
+            <span class="n">visited_forward</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">forward_priority_queue</span> <span class="o">=</span> <span class="p">[(</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">],</span> <span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">remaining_forward</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">forward_priority_queue</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">remaining_backward</span><span class="p">[</span><span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">backward_priority_queue</span><span class="p">)</span>
+            <span class="n">visited_backward</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">backward_priority_queue</span> <span class="o">=</span> <span class="p">[(</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">],</span> <span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">remaining_backward</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">backward_priority_queue</span><span class="p">)</span>
+            
+        <span class="n">is_forward</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">is_forward</span>
+        
+        
+    <span class="n">lowest_distance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+
+    <span class="n">common_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">forward_distances</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">backward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+                                                                    <span class="ow">and</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)]</span>
+                    
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">common_nodes</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">forward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">backward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lowest_distance</span><span class="p">:</span>
+            <span class="n">lowest_distance</span> <span class="o">=</span> <span class="n">forward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">backward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+                
+<span class="n">bi_directional_search</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">)</span>                        
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[(0, &#39;F&#39;), (inf, &#39;B&#39;), (inf, &#39;A&#39;), (inf, &#39;D&#39;), (inf, &#39;E&#39;), (inf, &#39;C&#39;)]
+set()
+set()
+[(0, &#39;F&#39;), (inf, &#39;B&#39;), (inf, &#39;A&#39;), (inf, &#39;D&#39;), (inf, &#39;E&#39;), (inf, &#39;C&#39;)]
+Current Node (0, &#39;F&#39;)
+{&#39;A&#39;}
+set()
+[(2, &#39;D&#39;), (2, &#39;E&#39;), (8, &#39;C&#39;), (inf, &#39;B&#39;), (inf, &#39;A&#39;)]
+{&#39;A&#39;}
+{&#39;F&#39;}
+[(2, &#39;D&#39;), (2, &#39;E&#39;), (8, &#39;C&#39;), (inf, &#39;B&#39;), (inf, &#39;A&#39;)]
+Current Node (2, &#39;D&#39;)
+{&#39;A&#39;, &#39;B&#39;}
+{&#39;F&#39;}
+[(2, &#39;E&#39;), (6, &#39;B&#39;), (4, &#39;C&#39;), (11, &#39;A&#39;)]
+{&#39;A&#39;, &#39;B&#39;}
+{&#39;D&#39;, &#39;F&#39;}
+[(2, &#39;E&#39;), (6, &#39;B&#39;), (4, &#39;C&#39;), (11, &#39;A&#39;)]
+Current Node (2, &#39;E&#39;)
+{&#39;C&#39;, &#39;A&#39;, &#39;B&#39;}
+{&#39;D&#39;, &#39;F&#39;}
+[(4, &#39;C&#39;), (6, &#39;B&#39;), (11, &#39;A&#39;)]
+{&#39;C&#39;, &#39;A&#39;, &#39;B&#39;}
+{&#39;D&#39;, &#39;E&#39;, &#39;F&#39;}
+A
+B
+C
+D
+E
+F
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13257,6 +13392,39 @@ F {&#39;distance&#39;: 9, &#39;prev_node&#39;: &#39;D&#39;}
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Dynamic-Programming">Dynamic Programming<a class="anchor-link" href="#Dynamic-Programming">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Explanation of some dynamic programming.</span>
 </pre></div>
 
     </div>
