@@ -13241,14 +13241,13 @@ F {&#39;distance&#39;: 9, &#39;prev_node&#39;: &#39;D&#39;}
 <p>In bi-directional search we alternate search from source and backward searching from the destination.
 When we remove an element from the queue that has already been visited by the other search then we stop.
 When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
-<h3 id="Goal-Directed-Search-or-A*-Algorithm">Goal-Directed Search or A* Algorithm<a class="anchor-link" href="#Goal-Directed-Search-or-A*-Algorithm">&#182;</a></h3><p>In goal-directed search we add a heuristic function ensure that we always take the node which is likely to be part of the path to the destination.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Implementing Bi-Directional Search</span>
@@ -13276,14 +13275,7 @@ When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
     <span class="n">is_forward</span> <span class="o">=</span> <span class="kc">True</span>
     
     <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">backward_priority_queue</span><span class="p">)</span>
         <span class="n">current_node</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">forward_priority_queue</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_forward</span> <span class="k">else</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">backward_priority_queue</span><span class="p">)</span>
-        
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_forward</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current Node&quot;</span><span class="p">,</span> <span class="n">current_node</span><span class="p">)</span>
-            
-        <span class="nb">print</span><span class="p">(</span><span class="n">visited_forward</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">visited_backward</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">visited_forward</span> <span class="ow">or</span> <span class="n">current_node</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">visited_backward</span><span class="p">:</span>
             <span class="k">break</span>
@@ -13315,16 +13307,217 @@ When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
         
         
     <span class="n">lowest_distance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+    <span class="n">common_node</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">common_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">forward_distances</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">backward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
                                                                     <span class="ow">and</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)]</span>
                     
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">common_nodes</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">forward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">backward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lowest_distance</span><span class="p">:</span>
             <span class="n">lowest_distance</span> <span class="o">=</span> <span class="n">forward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">backward_distances</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+            <span class="n">common_node</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            
+    <span class="c1"># Find the path</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">common_node</span><span class="p">)</span>
+    
+    <span class="n">current_node</span> <span class="o">=</span> <span class="n">common_node</span>
+    <span class="k">while</span> <span class="n">current_node</span> <span class="o">!=</span> <span class="n">source</span><span class="p">:</span>
+        <span class="n">current_node</span> <span class="o">=</span> <span class="n">forward_distances</span><span class="p">[</span><span class="n">current_node</span><span class="p">][</span><span class="s1">&#39;prev_node&#39;</span><span class="p">]</span>
+        
+        <span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">current_node</span><span class="p">)</span>
+        
+    <span class="n">current_node</span> <span class="o">=</span> <span class="n">common_node</span>
+    <span class="k">while</span> <span class="n">current_node</span> <span class="o">!=</span> <span class="n">destination</span><span class="p">:</span>
+        <span class="n">current_node</span> <span class="o">=</span> <span class="n">backward_distances</span><span class="p">[</span><span class="n">current_node</span><span class="p">][</span><span class="s1">&#39;prev_node&#39;</span><span class="p">]</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span>
+                
+    <span class="k">return</span> <span class="n">path</span><span class="p">,</span> <span class="n">lowest_distance</span>
                 
 <span class="n">bi_directional_search</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">)</span>                        
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[104]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>([&#39;A&#39;, &#39;B&#39;, &#39;D&#39;, &#39;F&#39;], 9)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Goal-Directed-Search-(A*-Algorithm)">Goal-Directed Search (A* Algorithm)<a class="anchor-link" href="#Goal-Directed-Search-(A*-Algorithm)">&#182;</a></h3><p>In a goal directed search we sort the priority queue by an additional heuristic function to make it more likely that the algorithm picks a vertex which is part of the final path to the destination thus speeding up computation in practice.</p>
+<p>There are different heuristics that we can use.</p>
+<h4 id="Manhatten-Distance">Manhatten Distance<a class="anchor-link" href="#Manhatten-Distance">&#182;</a></h4><p>h = abs (current_cell.x - goal.x) + abs( current_cell.y - goal.y)</p>
+<h4 id="Diagonal-Distance">Diagonal Distance<a class="anchor-link" href="#Diagonal-Distance">&#182;</a></h4><p>h = max { abs (current_cell.x - goal.x), abs (current_cell.y - goal.y) }</p>
+<h4 id="Euclidean-Distance">Euclidean Distance<a class="anchor-link" href="#Euclidean-Distance">&#182;</a></h4><p>h = sqrt( (current_cell.x - goal.x) ^ 2 + (current_cell.y - goal.y)^2 )</p>
+<p>These are just a few examples of heuristic functions.</p>
+<h3 id="Skipton-To-St-Andrews">Skipton To St Andrews<a class="anchor-link" href="#Skipton-To-St-Andrews">&#182;</a></h3><p>I will attempt to find the best route from Skipton to St Andrews using this highly abstracted graph I have created.</p>
+<p><img src="https://tim-beatham.github.io/Week8/skipton_to_st_andrews.png" alt="skipton graph"></p>
+<p>Each node represents a major town/city that we may need to pass to get to St Andrews.</p>
+<ul>
+<li>S = Skipton</li>
+<li>B = Bradford</li>
+<li>L = Leeds</li>
+<li>N = Newcastle</li>
+<li>E = Edinburgh </li>
+<li>K = Kendal</li>
+<li>C = Carlisle</li>
+<li>G = Glasgow</li>
+<li>St = Stirling</li>
+<li>SA = St Andrews</li>
+</ul>
+<p>Additionally I will the euclidean heuristic distance using longitude and latitude coordinates to help find the optimum route.</p>
+<p>The weights on the graph represents the time it takes to travel from one node to the other in minutes. The weights are not the distances between the two nodes.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[195]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">An implementation of the A* algorithm.</span>
+<span class="sd">Find the best way to get from Skipton</span>
+<span class="sd">to St Andrews.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">class</span> <span class="nc">Vertex</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">longitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">latitude</span>
+    
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">(</span><span class="si">{1}</span><span class="s2">, </span><span class="si">{2}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
+    
+<span class="n">skipton</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Skipton&quot;</span><span class="p">,</span> <span class="mf">53.9628</span><span class="p">,</span> <span class="mf">2.0163</span><span class="p">)</span>
+<span class="n">bradford</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Bradford&quot;</span><span class="p">,</span> <span class="mf">53.7960</span><span class="p">,</span> <span class="mf">1.7594</span><span class="p">)</span>
+<span class="n">leeds</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Leeds&quot;</span><span class="p">,</span> <span class="mf">53.8008</span><span class="p">,</span> <span class="mf">1.5491</span><span class="p">)</span>
+<span class="n">newcastle</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Newcastle&quot;</span><span class="p">,</span> <span class="mf">54.9783</span><span class="p">,</span> <span class="mf">1.6178</span><span class="p">)</span>
+<span class="n">kendal</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Kendal&quot;</span><span class="p">,</span> <span class="mf">54.3280</span><span class="p">,</span> <span class="mf">2.7463</span><span class="p">)</span>
+<span class="n">carlisle</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Carlisle&quot;</span><span class="p">,</span> <span class="mf">54.8925</span><span class="p">,</span> <span class="mf">2.9329</span><span class="p">)</span>  
+<span class="n">glasgow</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Glasgow&quot;</span><span class="p">,</span> <span class="mf">55.8642</span><span class="p">,</span> <span class="mf">4.2518</span><span class="p">)</span>
+<span class="n">edinburgh</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Edinburgh&quot;</span><span class="p">,</span> <span class="mf">55.9533</span><span class="p">,</span> <span class="mf">3.1883</span><span class="p">)</span>
+<span class="n">st_andrews</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;St Andrews&quot;</span><span class="p">,</span> <span class="mf">56.3398</span><span class="p">,</span> <span class="mf">2.7967</span><span class="p">)</span>
+<span class="n">stirling</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Stirling&quot;</span><span class="p">,</span> <span class="mf">56.1165</span><span class="p">,</span> <span class="mf">3.9369</span><span class="p">)</span>
+<span class="n">sheffield</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Sheffield&quot;</span><span class="p">,</span> <span class="mf">53.3811</span><span class="p">,</span> <span class="mf">1.4701</span><span class="p">)</span>
+<span class="n">manchester</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="s2">&quot;Manchester&quot;</span><span class="p">,</span> <span class="mf">53.3811</span><span class="p">,</span> <span class="mf">1.4701</span><span class="p">)</span>
+
+<span class="n">travel_graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">skipton</span><span class="p">,</span> <span class="n">bradford</span><span class="p">,</span> <span class="n">leeds</span><span class="p">,</span> <span class="n">newcastle</span><span class="p">,</span> <span class="n">kendal</span><span class="p">,</span> <span class="n">carlisle</span><span class="p">,</span> <span class="n">glasgow</span><span class="p">,</span> <span class="n">edinburgh</span><span class="p">,</span> <span class="n">st_andrews</span><span class="p">,</span>
+                    <span class="n">stirling</span><span class="p">,</span> <span class="n">sheffield</span><span class="p">,</span> <span class="n">manchester</span><span class="p">)</span>
+
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">skipton</span><span class="p">,</span> <span class="n">bradford</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">bradford</span><span class="p">,</span> <span class="n">skipton</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">skipton</span><span class="p">,</span> <span class="n">leeds</span><span class="p">,</span> <span class="mi">58</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">leeds</span><span class="p">,</span> <span class="n">skipton</span><span class="p">,</span> <span class="mi">58</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">skipton</span><span class="p">,</span> <span class="n">kendal</span><span class="p">,</span> <span class="mi">71</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">kendal</span><span class="p">,</span> <span class="n">skipton</span><span class="p">,</span> <span class="mi">71</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">bradford</span><span class="p">,</span> <span class="n">leeds</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">leeds</span><span class="p">,</span> <span class="n">bradford</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">kendal</span><span class="p">,</span> <span class="n">carlisle</span><span class="p">,</span> <span class="mi">61</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">carlisle</span><span class="p">,</span> <span class="n">kendal</span><span class="p">,</span> <span class="mi">61</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">carlisle</span><span class="p">,</span> <span class="n">glasgow</span><span class="p">,</span> <span class="mi">98</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">glasgow</span><span class="p">,</span> <span class="n">carlisle</span><span class="p">,</span> <span class="mi">98</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">edinburgh</span><span class="p">,</span> <span class="n">glasgow</span><span class="p">,</span> <span class="mi">63</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">glasgow</span><span class="p">,</span> <span class="n">edinburgh</span><span class="p">,</span> <span class="mi">63</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">glasgow</span><span class="p">,</span> <span class="n">stirling</span><span class="p">,</span> <span class="mi">37</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">stirling</span><span class="p">,</span> <span class="n">glasgow</span><span class="p">,</span> <span class="mi">37</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">stirling</span><span class="p">,</span> <span class="n">st_andrews</span><span class="p">,</span> <span class="mi">86</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">st_andrews</span><span class="p">,</span> <span class="n">stirling</span><span class="p">,</span> <span class="mi">86</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">edinburgh</span><span class="p">,</span> <span class="n">st_andrews</span><span class="p">,</span> <span class="mi">83</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">st_andrews</span><span class="p">,</span> <span class="n">edinburgh</span><span class="p">,</span> <span class="mi">83</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">leeds</span><span class="p">,</span> <span class="n">newcastle</span><span class="p">,</span> <span class="mi">108</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">newcastle</span><span class="p">,</span> <span class="n">leeds</span><span class="p">,</span> <span class="mi">108</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">newcastle</span><span class="p">,</span> <span class="n">edinburgh</span><span class="p">,</span> <span class="mi">144</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">edinburgh</span><span class="p">,</span> <span class="n">newcastle</span><span class="p">,</span> <span class="mi">144</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">skipton</span><span class="p">,</span> <span class="n">manchester</span><span class="p">,</span> <span class="mi">79</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">manchester</span><span class="p">,</span> <span class="n">skipton</span><span class="p">,</span> <span class="mi">79</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">skipton</span><span class="p">,</span> <span class="n">sheffield</span><span class="p">,</span> <span class="mi">104</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">sheffield</span><span class="p">,</span> <span class="n">skipton</span><span class="p">,</span> <span class="mi">104</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">manchester</span><span class="p">,</span> <span class="n">sheffield</span><span class="p">,</span> <span class="mi">89</span><span class="p">)</span>
+<span class="n">travel_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">sheffield</span><span class="p">,</span> <span class="n">manchester</span><span class="p">,</span> <span class="mi">89</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+
+<span class="n">heuristic_factor</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="nf">euclidean_distance</span><span class="p">(</span><span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">node1</span><span class="o">.</span><span class="n">longitude</span> <span class="o">-</span> <span class="n">node2</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">node1</span><span class="o">.</span><span class="n">latitude</span> <span class="o">-</span> <span class="n">node2</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> \
+                                                        <span class="o">*</span> <span class="n">heuristic_factor</span>
+
+<span class="k">def</span> <span class="nf">a_star</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">start_vertex</span><span class="p">,</span> <span class="n">end_vertex</span><span class="p">):</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="p">{</span><span class="n">vertex</span><span class="p">:{</span><span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span> <span class="s1">&#39;prev_node&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+    <span class="n">distances</span><span class="p">[</span><span class="n">start_vertex</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">remaining_nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">distances</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">vertex</span><span class="p">:</span> <span class="n">distances</span><span class="p">[</span><span class="n">vertex</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">])</span>
+    
+    <span class="n">current_node</span> <span class="o">=</span> <span class="n">remaining_nodes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    
+    <span class="k">while</span> <span class="n">current_node</span> <span class="o">!=</span> <span class="n">end_vertex</span><span class="p">:</span>
+        
+        <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span>
+
+
+        <span class="c1"># Get the surrounding elements.</span>
+        <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">current_node</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Update the distance</span>
+            <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span> <span class="ow">and</span> <span class="n">distances</span><span class="p">[</span><span class="n">current_node</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span> <span class="o">&lt;</span> <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]:</span>
+                <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">current_node</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span>
+                <span class="n">distances</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;prev_node&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_node</span>
+                        
+        <span class="n">remaining_nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">remaining_nodes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">vertex</span><span class="p">:</span> <span class="n">distances</span><span class="p">[</span><span class="n">vertex</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> 
+                                 <span class="o">+</span> <span class="n">euclidean_distance</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">end_vertex</span><span class="p">))</span>
+        
+        <span class="n">current_node</span> <span class="o">=</span> <span class="n">remaining_nodes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+    <span class="n">total_cost</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">end_vertex</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+    
+    <span class="n">current_node</span> <span class="o">=</span> <span class="n">end_vertex</span>
+    
+    <span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">while</span> <span class="n">current_node</span> <span class="o">!=</span> <span class="n">start_vertex</span><span class="p">:</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">current_node</span><span class="p">)</span>
+        <span class="n">current_node</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">current_node</span><span class="p">][</span><span class="s1">&#39;prev_node&#39;</span><span class="p">]</span>
+        
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distances&quot;</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Visited&quot;</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
+    
+        
+    <span class="k">return</span> <span class="n">total_cost</span><span class="p">,</span> <span class="n">path</span>
+        
+<span class="n">a_star</span><span class="p">(</span><span class="n">travel_graph</span><span class="p">,</span> <span class="n">skipton</span><span class="p">,</span> <span class="n">st_andrews</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13341,38 +13534,28 @@ When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[(0, &#39;F&#39;), (inf, &#39;B&#39;), (inf, &#39;A&#39;), (inf, &#39;D&#39;), (inf, &#39;E&#39;), (inf, &#39;C&#39;)]
-set()
-set()
-[(0, &#39;F&#39;), (inf, &#39;B&#39;), (inf, &#39;A&#39;), (inf, &#39;D&#39;), (inf, &#39;E&#39;), (inf, &#39;C&#39;)]
-Current Node (0, &#39;F&#39;)
-{&#39;A&#39;}
-set()
-[(2, &#39;D&#39;), (2, &#39;E&#39;), (8, &#39;C&#39;), (inf, &#39;B&#39;), (inf, &#39;A&#39;)]
-{&#39;A&#39;}
-{&#39;F&#39;}
-[(2, &#39;D&#39;), (2, &#39;E&#39;), (8, &#39;C&#39;), (inf, &#39;B&#39;), (inf, &#39;A&#39;)]
-Current Node (2, &#39;D&#39;)
-{&#39;A&#39;, &#39;B&#39;}
-{&#39;F&#39;}
-[(2, &#39;E&#39;), (6, &#39;B&#39;), (4, &#39;C&#39;), (11, &#39;A&#39;)]
-{&#39;A&#39;, &#39;B&#39;}
-{&#39;D&#39;, &#39;F&#39;}
-[(2, &#39;E&#39;), (6, &#39;B&#39;), (4, &#39;C&#39;), (11, &#39;A&#39;)]
-Current Node (2, &#39;E&#39;)
-{&#39;C&#39;, &#39;A&#39;, &#39;B&#39;}
-{&#39;D&#39;, &#39;F&#39;}
-[(4, &#39;C&#39;), (6, &#39;B&#39;), (11, &#39;A&#39;)]
-{&#39;C&#39;, &#39;A&#39;, &#39;B&#39;}
-{&#39;D&#39;, &#39;E&#39;, &#39;F&#39;}
-A
-B
-C
-D
-E
-F
+<pre>Distances {Skipton(53.9628, 2.0163): {&#39;distance&#39;: 0, &#39;prev_node&#39;: None}, Bradford(53.796, 1.7594): {&#39;distance&#39;: 35, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}, Leeds(53.8008, 1.5491): {&#39;distance&#39;: 58, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}, Newcastle(54.9783, 1.6178): {&#39;distance&#39;: 166, &#39;prev_node&#39;: Leeds(53.8008, 1.5491)}, Kendal(54.328, 2.7463): {&#39;distance&#39;: 71, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}, Carlisle(54.8925, 2.9329): {&#39;distance&#39;: inf, &#39;prev_node&#39;: None}, Glasgow(55.8642, 4.2518): {&#39;distance&#39;: 373, &#39;prev_node&#39;: Edinburgh(55.9533, 3.1883)}, Edinburgh(55.9533, 3.1883): {&#39;distance&#39;: 310, &#39;prev_node&#39;: Newcastle(54.9783, 1.6178)}, St Andrews(56.3398, 2.7967): {&#39;distance&#39;: 393, &#39;prev_node&#39;: Edinburgh(55.9533, 3.1883)}, Stirling(56.1165, 3.9369): {&#39;distance&#39;: inf, &#39;prev_node&#39;: None}, Sheffield(53.3811, 1.4701): {&#39;distance&#39;: 104, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}, Manchester(53.3811, 1.4701): {&#39;distance&#39;: 79, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}}
+
+Visited {Leeds(53.8008, 1.5491), Newcastle(54.9783, 1.6178), Skipton(53.9628, 2.0163), Edinburgh(55.9533, 3.1883), Bradford(53.796, 1.7594)}
 </pre>
 </div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[195]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(393,
+ [Leeds(53.8008, 1.5491),
+  Newcastle(54.9783, 1.6178),
+  Edinburgh(55.9533, 3.1883),
+  St Andrews(56.3398, 2.7967)])</pre>
+</div>
+
 </div>
 
 </div>
@@ -13382,32 +13565,107 @@ F
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Bellman-Forde-Algorithm">Bellman-Forde Algorithm<a class="anchor-link" href="#Bellman-Forde-Algorithm">&#182;</a></h2>
+<h3 id="The-Problem-With-Using-Euclidean-In-The-Above-Example">The Problem With Using Euclidean In The Above Example<a class="anchor-link" href="#The-Problem-With-Using-Euclidean-In-The-Above-Example">&#182;</a></h3><p>Using euclidean distance as a heuristic has many problems in the above example which shows it is not the best heuristic for the problem.</p>
+<p>If I change the heuristic factor too much then the algorithm always goes in the direction which is closest to St Andrews as the bird flies. Hence when the heuristic_factor variable is 100 the algorithm says that the quickest route to St Andrews is Skipton -&gt; Leeds -&gt; Newcastle -&gt; Edinburgh -&gt; St Andrews. When in fact the quiest route is Skipton -&gt; Kendal -&gt; Carlisle -&gt; Glasgow -&gt; Stirling -&gt; St Andrews</p>
+<p>When the heuristic factor is too low the algorithm is not influenced greatly and explores nodes it does not need to such as Manchester and Sheffield. It does however ultimately find the shortest path.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Bellman-Ford-Algorithm">Bellman-Ford Algorithm<a class="anchor-link" href="#Bellman-Ford-Algorithm">&#182;</a></h2><p>Dijikstra's algorithm only works for graphs that have positive weights. Dijikstra's algorithm does not work for graphs with negative weights.</p>
+<p>This is because a graph that has a negative cycle has an undefined shortest path as when you keep iterating over this cycle the total cost gets smaller and smaller.</p>
+<p>The algorithm is less efficient than Dijikstra's algorithm however it runs in O(VE) time whereas Dijikstras algorithm runs in O ( V + E l o g V ) if you use a min-heap data structure as the priority queue.</p>
+<p>If the graph is simple then it is likely that E = O(V^2) and therefore the Bellman-Ford algorithm is comparable to O(V ^ 3) in some cases.</p>
+<p><img src="https://java2blog.com/wp-content/uploads/2018/11/bellman-Ford1.jpg" alt="bellman ford graph"></p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[223]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bellman_ford_graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
+
+<span class="n">bellman_ford_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">bellman_ford_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">bellman_ford_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">bellman_ford_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">bellman_ford_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">bellman_ford_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">bellman_ford_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Implementing the Bellman-Ford algorithm</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">bellman_ford</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">start_point</span><span class="p">):</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="p">{</span><span class="n">vertex</span><span class="p">:{</span><span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span> <span class="s1">&#39;prev_node&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span> <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+    <span class="n">distances</span><span class="p">[</span><span class="n">start_point</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    
+    <span class="c1"># Iterate over every vertex in the graph.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="o">.</span><span class="n">items</span><span class="p">())):</span>
+        <span class="c1"># Iterate over every edge in the graph</span>
+        <span class="k">for</span> <span class="n">source_vertex</span><span class="p">,</span> <span class="n">edges</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">dest_vertex</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">temp_distance</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">source_vertex</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span>
+                <span class="k">if</span> <span class="n">temp_distance</span> <span class="o">&lt;</span> <span class="n">distances</span><span class="p">[</span><span class="n">dest_vertex</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]:</span>
+                    <span class="n">distances</span><span class="p">[</span><span class="n">dest_vertex</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_distance</span>
+                    <span class="n">distances</span><span class="p">[</span><span class="n">dest_vertex</span><span class="p">][</span><span class="s1">&#39;prev_node&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_vertex</span>
+                    
+                                        
+    <span class="k">for</span> <span class="n">source_vertex</span><span class="p">,</span> <span class="n">edges</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">dest_vertex</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">distances</span><span class="p">[</span><span class="n">source_vertex</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">weight</span> <span class="o">&lt;</span> <span class="n">distances</span><span class="p">[</span><span class="n">dest_vertex</span><span class="p">][</span><span class="s1">&#39;distance&#39;</span><span class="p">]:</span>\
+                <span class="k">return</span> <span class="s2">&quot;Negative Cycle Exists&quot;</span>
+    
+    <span class="k">return</span> <span class="n">distances</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">bellman_ford</span><span class="p">(</span><span class="n">bellman_ford_graph</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="n">final_travel</span> <span class="o">=</span> <span class="n">bellman_ford</span><span class="p">(</span><span class="n">travel_graph</span><span class="p">,</span> <span class="n">skipton</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">final_travel</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
+<div class="output_wrapper">
+<div class="output">
 
-    </div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Negative Cycle Exists
+
+Skipton(53.9628, 2.0163) {&#39;distance&#39;: 0, &#39;prev_node&#39;: None}
+Bradford(53.796, 1.7594) {&#39;distance&#39;: 35, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}
+Leeds(53.8008, 1.5491) {&#39;distance&#39;: 58, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}
+Newcastle(54.9783, 1.6178) {&#39;distance&#39;: 166, &#39;prev_node&#39;: Leeds(53.8008, 1.5491)}
+Kendal(54.328, 2.7463) {&#39;distance&#39;: 71, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}
+Carlisle(54.8925, 2.9329) {&#39;distance&#39;: 132, &#39;prev_node&#39;: Kendal(54.328, 2.7463)}
+Glasgow(55.8642, 4.2518) {&#39;distance&#39;: 230, &#39;prev_node&#39;: Carlisle(54.8925, 2.9329)}
+Edinburgh(55.9533, 3.1883) {&#39;distance&#39;: 293, &#39;prev_node&#39;: Glasgow(55.8642, 4.2518)}
+St Andrews(56.3398, 2.7967) {&#39;distance&#39;: 353, &#39;prev_node&#39;: Stirling(56.1165, 3.9369)}
+Stirling(56.1165, 3.9369) {&#39;distance&#39;: 267, &#39;prev_node&#39;: Glasgow(55.8642, 4.2518)}
+Sheffield(53.3811, 1.4701) {&#39;distance&#39;: 104, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}
+Manchester(53.3811, 1.4701) {&#39;distance&#39;: 79, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13421,10 +13679,23 @@ F
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[222]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Explanation of some dynamic programming.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
