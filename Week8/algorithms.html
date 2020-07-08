@@ -13677,12 +13677,430 @@ Manchester(53.3811, 1.4701) {&#39;distance&#39;: 79, &#39;prev_node&#39;: Skipto
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Dynamic programming is an algorithm design technique to reduce the time complexity of algorithms.
+Dynamic programming techniques are used to reduce the time complexity of exponential problems so that they have polynomial time complexity.
+It is particularly used for optimization problems.</p>
+<h2 id="Fibonacci-Numbers">Fibonacci Numbers<a class="anchor-link" href="#Fibonacci-Numbers">&#182;</a></h2><h3 id="The-Recursive-Fibonacci-Algorithm">The Recursive Fibonacci Algorithm<a class="anchor-link" href="#The-Recursive-Fibonacci-Algorithm">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[222]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Explanation of some dynamic programming.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fibonacci</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[2]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>55</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above algorithm is not efficient at all. If you think of the recursive calls as a tree to compute F<sub>n - 1</sub> requires you to compute F<sub>n - 2</sub> and F<sub>n - 3</sub>. To compute F<sub>n - 2</sub> requires you to compute F<sub>n - 3</sub> and F<sub>n - 4</sub> and so on. Meaning the time comlexity of the above algorithm is exponential (O (n<sup>n/2</sup>))</p>
+<h3 id="The-Memoized-Fibonacci-Algorithm">The Memoized Fibonacci Algorithm<a class="anchor-link" href="#The-Memoized-Fibonacci-Algorithm">&#182;</a></h3><p>Memoization is an optimization technique to speedup the performance of algorithms.</p>
+<p>If you look at the recursion tree you will notice we are working out the answer to F<sub>n - 2</sub> multiple times. By keeping track of the subproblems we have solved and storing them in a data structure for when we need them again we can increase the performance of the algorithm to O(n) time complexity.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">memory</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">def</span> <span class="nf">memoized_fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">memory</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">memory</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">memoized_fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">memoized_fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">f</span>
+
+<span class="n">memoized_fibonacci</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">memoized_fibonacci</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[11]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>89</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By storing each result to each fibonacci call in a hash map we can access the results of previous fibonacci calls in O(1) time complexity.</p>
+<p>The algorithm above:</p>
+<ul>
+<li>Only recurses first time called.</li>
+<li>There are only n nonmemoized calls.</li>
+<li>memoized calls take O(1) time complexity.</li>
+<li>O(1) time compleity per call ignoring recursion.</li>
+</ul>
+<p>The above points mean the algorithm becomes polynomial in time complexity which is good.</p>
+<p>time = number of subproblems * time per subproblem</p>
+<p>In the above example the number of subproblems is n and the time per subproblem is O(1). Meaning the above algorithm is O(n) time complexity.</p>
+<h3 id="Bottom-Up-DP-Algorithm">Bottom-Up DP Algorithm<a class="anchor-link" href="#Bottom-Up-DP-Algorithm">&#182;</a></h3><p>By imagining the treatting the recursive calls as a tree we can create a memoizedd algorithm which has the same time complexity but uses no recursion.</p>
+<p>Practically speaking this is faster as it involves no recursion.</p>
+<p>There is an even faster fibonacci algorithm which takes O(lg n) time.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fib</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">def</span> <span class="nf">bottom_up_fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">fib</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">fib</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">fib</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="k">return</span> <span class="n">fib</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+<span class="n">bottom_up_fibonacci</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[12]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>89</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Guessing-in-Dynamic-Programming">Guessing in Dynamic Programming<a class="anchor-link" href="#Guessing-in-Dynamic-Programming">&#182;</a></h3><p>Guessing is a powerful tool in dynamic programming.</p>
+<p>When we implement guessing in dynamic programming we guess the answer to a subproblem and we take the minimum (or maximum) of the guesses as the answer. We do this for each subproblem.</p>
+<p>This is how the Bellman Ford algorithm works. We guess the shortst path s to v say (u, v). This works due to the triangle inequality formula.</p>
+<p>shortest s -&gt; u path + edge(u, v)</p>
+<p>Finding the u path is another subproblem and we keep doing this recursively until we have solved all the subproblems and thus found the shortest path from s to v.</p>
+<p>We use memoization to ensure the time complexity is polynomial otherwise the time complexity would be exponential and thus very inefficient.</p>
+<p>For a direct acyclic graph it has a time complexity of O(V + E)</p>
+<p>If the this is not the case the algorithm runs forever. However we can remove all cyclic dependencies by addding more subproblems.</p>
+<h3 id="Text-Justification">Text Justification<a class="anchor-link" href="#Text-Justification">&#182;</a></h3><p><img src="https://css-tricks.com/wp-content/uploads/2017/08/justify-text-figure-1.png" alt="text justification"></p>
+<p>Dynamic programming can be used in text justification. In text justification we find the best point to split each line. This makes the text readable.</p>
+<p>One obvious way is through the greedy algorithm. That is fit as many words as possible on the first line then as many on the second line and so on. This is bad because in practice as it can make some lines not very readable.</p>
+<p>Example:</p>
+<p><code>Greedy Algorithm (Bad):
+blah blah blah
+b   l   a    h    
+reallylongword</code></p>
+<p><code>The Dynamic Algorithm (Good):
+blah      blah
+blah      blah
+reallylongword</code></p>
+<p>For each line we define a badness function which is the cost of a line.</p>
+<p>Cost a line = (page_width - total_length)^3</p>
+<p>Total Cost = Sum of costs</p>
+<p>The goal is to minimize the cost function.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">long_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;By impossible of in difficulty discovered celebrated ye. Justice joy manners boy met resolve produce. Bed head loud next plan rent had easy add him. As earnestly shameless elsewhere defective estimable fulfilled of. Esteem my advice it an excuse enable. Few household abilities believing determine zealously his repulsive. To open draw dear be by side like. </span>
+
+<span class="s2">Oh he decisively impression attachment friendship so if everything. Whose her enjoy chief new young. Felicity if ye required likewise so doubtful. On so attention necessary at by provision otherwise existence direction. Unpleasing up announcing unpleasant themselves oh do on. Way advantage age led listening belonging supposing. </span>
+
+<span class="s2">Cottage out enabled was entered greatly prevent message. No procured unlocked an likewise. Dear but what she been over gay felt body. Six principles advantages and use entreaties decisively. Eat met has dwelling unpacked see whatever followed. Court in of leave again as am. Greater sixteen to forming colonel no on be. So an advice hardly barton. He be turned sudden engage manner spirit. </span>
+
+<span class="s2">Considered discovered ye sentiments projecting entreaties of melancholy is. In expression an solicitude principles in do. Hard do me sigh with west same lady. Their saved linen downs tears son add music. Expression alteration entreaties mrs can terminated estimating. Her too add narrow having wished. To things so denied admire. Am wound worth water he linen at vexed. </span>
+
+<span class="s2">Wise busy past both park when an ye no. Nay likely her length sooner thrown sex lively income. The expense windows adapted sir. Wrong widen drawn ample eat off doors money. Offending belonging promotion provision an be oh consulted ourselves it. Blessing welcomed ladyship she met humoured sir breeding her. Six curiosity day assurance bed necessary. </span>
+
+<span class="s2">In friendship diminution instrument so. Son sure paid door with say them. Two among sir sorry men court. Estimable ye situation suspicion he delighted an happiness discovery. Fact are size cold why had part. If believing or sweetness otherwise in we forfeited. Tolerably an unwilling arranging of determine. Beyond rather sooner so if up wishes or. </span>
+
+<span class="s2">Sex reached suppose our whether. Oh really by an manner sister so. One sportsman tolerably him extensive put she immediate. He abroad of cannot looked in. Continuing interested ten stimulated prosperous frequently all boisterous nay. Of oh really he extent horses wicket. </span>
+
+<span class="s2">Admiration we surrounded possession frequently he. Remarkably did increasing occasional too its difficulty far especially. Known tiled but sorry joy balls. Bed sudden manner indeed fat now feebly. Face do with in need of wife paid that be. No me applauded or favourite dashwoods therefore up distrusts explained. </span>
+
+<span class="s2">Continual delighted as elsewhere am convinced unfeeling. Introduced stimulated attachment no by projection. To loud lady whom my mile sold four. Need miss all four case fine age tell. He families my pleasant speaking it bringing it thoughts. View busy dine oh in knew if even. Boy these along far own other equal old fanny charm. Difficulty invitation put introduced see middletons nor preference. </span>
+
+<span class="s2">Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of. Consider speaking me prospect whatever if. Ten nearer rather hunted six parish indeed number. Allowance repulsive sex may contained can set suspected abilities cordially. Do part am he high rest that. So fruit to ready it being views match. &quot;&quot;&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">long_text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;By&#39;, &#39;impossible&#39;, &#39;of&#39;, &#39;in&#39;, &#39;difficulty&#39;, &#39;discovered&#39;, &#39;celebrated&#39;, &#39;ye.&#39;, &#39;Justice&#39;, &#39;joy&#39;, &#39;manners&#39;, &#39;boy&#39;, &#39;met&#39;, &#39;resolve&#39;, &#39;produce.&#39;, &#39;Bed&#39;, &#39;head&#39;, &#39;loud&#39;, &#39;next&#39;, &#39;plan&#39;, &#39;rent&#39;, &#39;had&#39;, &#39;easy&#39;, &#39;add&#39;, &#39;him.&#39;, &#39;As&#39;, &#39;earnestly&#39;, &#39;shameless&#39;, &#39;elsewhere&#39;, &#39;defective&#39;, &#39;estimable&#39;, &#39;fulfilled&#39;, &#39;of.&#39;, &#39;Esteem&#39;, &#39;my&#39;, &#39;advice&#39;, &#39;it&#39;, &#39;an&#39;, &#39;excuse&#39;, &#39;enable.&#39;, &#39;Few&#39;, &#39;household&#39;, &#39;abilities&#39;, &#39;believing&#39;, &#39;determine&#39;, &#39;zealously&#39;, &#39;his&#39;, &#39;repulsive.&#39;, &#39;To&#39;, &#39;open&#39;, &#39;draw&#39;, &#39;dear&#39;, &#39;be&#39;, &#39;by&#39;, &#39;side&#39;, &#39;like.&#39;, &#39;Oh&#39;, &#39;he&#39;, &#39;decisively&#39;, &#39;impression&#39;, &#39;attachment&#39;, &#39;friendship&#39;, &#39;so&#39;, &#39;if&#39;, &#39;everything.&#39;, &#39;Whose&#39;, &#39;her&#39;, &#39;enjoy&#39;, &#39;chief&#39;, &#39;new&#39;, &#39;young.&#39;, &#39;Felicity&#39;, &#39;if&#39;, &#39;ye&#39;, &#39;required&#39;, &#39;likewise&#39;, &#39;so&#39;, &#39;doubtful.&#39;, &#39;On&#39;, &#39;so&#39;, &#39;attention&#39;, &#39;necessary&#39;, &#39;at&#39;, &#39;by&#39;, &#39;provision&#39;, &#39;otherwise&#39;, &#39;existence&#39;, &#39;direction.&#39;, &#39;Unpleasing&#39;, &#39;up&#39;, &#39;announcing&#39;, &#39;unpleasant&#39;, &#39;themselves&#39;, &#39;oh&#39;, &#39;do&#39;, &#39;on.&#39;, &#39;Way&#39;, &#39;advantage&#39;, &#39;age&#39;, &#39;led&#39;, &#39;listening&#39;, &#39;belonging&#39;, &#39;supposing.&#39;, &#39;Cottage&#39;, &#39;out&#39;, &#39;enabled&#39;, &#39;was&#39;, &#39;entered&#39;, &#39;greatly&#39;, &#39;prevent&#39;, &#39;message.&#39;, &#39;No&#39;, &#39;procured&#39;, &#39;unlocked&#39;, &#39;an&#39;, &#39;likewise.&#39;, &#39;Dear&#39;, &#39;but&#39;, &#39;what&#39;, &#39;she&#39;, &#39;been&#39;, &#39;over&#39;, &#39;gay&#39;, &#39;felt&#39;, &#39;body.&#39;, &#39;Six&#39;, &#39;principles&#39;, &#39;advantages&#39;, &#39;and&#39;, &#39;use&#39;, &#39;entreaties&#39;, &#39;decisively.&#39;, &#39;Eat&#39;, &#39;met&#39;, &#39;has&#39;, &#39;dwelling&#39;, &#39;unpacked&#39;, &#39;see&#39;, &#39;whatever&#39;, &#39;followed.&#39;, &#39;Court&#39;, &#39;in&#39;, &#39;of&#39;, &#39;leave&#39;, &#39;again&#39;, &#39;as&#39;, &#39;am.&#39;, &#39;Greater&#39;, &#39;sixteen&#39;, &#39;to&#39;, &#39;forming&#39;, &#39;colonel&#39;, &#39;no&#39;, &#39;on&#39;, &#39;be.&#39;, &#39;So&#39;, &#39;an&#39;, &#39;advice&#39;, &#39;hardly&#39;, &#39;barton.&#39;, &#39;He&#39;, &#39;be&#39;, &#39;turned&#39;, &#39;sudden&#39;, &#39;engage&#39;, &#39;manner&#39;, &#39;spirit.&#39;, &#39;Considered&#39;, &#39;discovered&#39;, &#39;ye&#39;, &#39;sentiments&#39;, &#39;projecting&#39;, &#39;entreaties&#39;, &#39;of&#39;, &#39;melancholy&#39;, &#39;is.&#39;, &#39;In&#39;, &#39;expression&#39;, &#39;an&#39;, &#39;solicitude&#39;, &#39;principles&#39;, &#39;in&#39;, &#39;do.&#39;, &#39;Hard&#39;, &#39;do&#39;, &#39;me&#39;, &#39;sigh&#39;, &#39;with&#39;, &#39;west&#39;, &#39;same&#39;, &#39;lady.&#39;, &#39;Their&#39;, &#39;saved&#39;, &#39;linen&#39;, &#39;downs&#39;, &#39;tears&#39;, &#39;son&#39;, &#39;add&#39;, &#39;music.&#39;, &#39;Expression&#39;, &#39;alteration&#39;, &#39;entreaties&#39;, &#39;mrs&#39;, &#39;can&#39;, &#39;terminated&#39;, &#39;estimating.&#39;, &#39;Her&#39;, &#39;too&#39;, &#39;add&#39;, &#39;narrow&#39;, &#39;having&#39;, &#39;wished.&#39;, &#39;To&#39;, &#39;things&#39;, &#39;so&#39;, &#39;denied&#39;, &#39;admire.&#39;, &#39;Am&#39;, &#39;wound&#39;, &#39;worth&#39;, &#39;water&#39;, &#39;he&#39;, &#39;linen&#39;, &#39;at&#39;, &#39;vexed.&#39;, &#39;Wise&#39;, &#39;busy&#39;, &#39;past&#39;, &#39;both&#39;, &#39;park&#39;, &#39;when&#39;, &#39;an&#39;, &#39;ye&#39;, &#39;no.&#39;, &#39;Nay&#39;, &#39;likely&#39;, &#39;her&#39;, &#39;length&#39;, &#39;sooner&#39;, &#39;thrown&#39;, &#39;sex&#39;, &#39;lively&#39;, &#39;income.&#39;, &#39;The&#39;, &#39;expense&#39;, &#39;windows&#39;, &#39;adapted&#39;, &#39;sir.&#39;, &#39;Wrong&#39;, &#39;widen&#39;, &#39;drawn&#39;, &#39;ample&#39;, &#39;eat&#39;, &#39;off&#39;, &#39;doors&#39;, &#39;money.&#39;, &#39;Offending&#39;, &#39;belonging&#39;, &#39;promotion&#39;, &#39;provision&#39;, &#39;an&#39;, &#39;be&#39;, &#39;oh&#39;, &#39;consulted&#39;, &#39;ourselves&#39;, &#39;it.&#39;, &#39;Blessing&#39;, &#39;welcomed&#39;, &#39;ladyship&#39;, &#39;she&#39;, &#39;met&#39;, &#39;humoured&#39;, &#39;sir&#39;, &#39;breeding&#39;, &#39;her.&#39;, &#39;Six&#39;, &#39;curiosity&#39;, &#39;day&#39;, &#39;assurance&#39;, &#39;bed&#39;, &#39;necessary.&#39;, &#39;In&#39;, &#39;friendship&#39;, &#39;diminution&#39;, &#39;instrument&#39;, &#39;so.&#39;, &#39;Son&#39;, &#39;sure&#39;, &#39;paid&#39;, &#39;door&#39;, &#39;with&#39;, &#39;say&#39;, &#39;them.&#39;, &#39;Two&#39;, &#39;among&#39;, &#39;sir&#39;, &#39;sorry&#39;, &#39;men&#39;, &#39;court.&#39;, &#39;Estimable&#39;, &#39;ye&#39;, &#39;situation&#39;, &#39;suspicion&#39;, &#39;he&#39;, &#39;delighted&#39;, &#39;an&#39;, &#39;happiness&#39;, &#39;discovery.&#39;, &#39;Fact&#39;, &#39;are&#39;, &#39;size&#39;, &#39;cold&#39;, &#39;why&#39;, &#39;had&#39;, &#39;part.&#39;, &#39;If&#39;, &#39;believing&#39;, &#39;or&#39;, &#39;sweetness&#39;, &#39;otherwise&#39;, &#39;in&#39;, &#39;we&#39;, &#39;forfeited.&#39;, &#39;Tolerably&#39;, &#39;an&#39;, &#39;unwilling&#39;, &#39;arranging&#39;, &#39;of&#39;, &#39;determine.&#39;, &#39;Beyond&#39;, &#39;rather&#39;, &#39;sooner&#39;, &#39;so&#39;, &#39;if&#39;, &#39;up&#39;, &#39;wishes&#39;, &#39;or.&#39;, &#39;Sex&#39;, &#39;reached&#39;, &#39;suppose&#39;, &#39;our&#39;, &#39;whether.&#39;, &#39;Oh&#39;, &#39;really&#39;, &#39;by&#39;, &#39;an&#39;, &#39;manner&#39;, &#39;sister&#39;, &#39;so.&#39;, &#39;One&#39;, &#39;sportsman&#39;, &#39;tolerably&#39;, &#39;him&#39;, &#39;extensive&#39;, &#39;put&#39;, &#39;she&#39;, &#39;immediate.&#39;, &#39;He&#39;, &#39;abroad&#39;, &#39;of&#39;, &#39;cannot&#39;, &#39;looked&#39;, &#39;in.&#39;, &#39;Continuing&#39;, &#39;interested&#39;, &#39;ten&#39;, &#39;stimulated&#39;, &#39;prosperous&#39;, &#39;frequently&#39;, &#39;all&#39;, &#39;boisterous&#39;, &#39;nay.&#39;, &#39;Of&#39;, &#39;oh&#39;, &#39;really&#39;, &#39;he&#39;, &#39;extent&#39;, &#39;horses&#39;, &#39;wicket.&#39;, &#39;Admiration&#39;, &#39;we&#39;, &#39;surrounded&#39;, &#39;possession&#39;, &#39;frequently&#39;, &#39;he.&#39;, &#39;Remarkably&#39;, &#39;did&#39;, &#39;increasing&#39;, &#39;occasional&#39;, &#39;too&#39;, &#39;its&#39;, &#39;difficulty&#39;, &#39;far&#39;, &#39;especially.&#39;, &#39;Known&#39;, &#39;tiled&#39;, &#39;but&#39;, &#39;sorry&#39;, &#39;joy&#39;, &#39;balls.&#39;, &#39;Bed&#39;, &#39;sudden&#39;, &#39;manner&#39;, &#39;indeed&#39;, &#39;fat&#39;, &#39;now&#39;, &#39;feebly.&#39;, &#39;Face&#39;, &#39;do&#39;, &#39;with&#39;, &#39;in&#39;, &#39;need&#39;, &#39;of&#39;, &#39;wife&#39;, &#39;paid&#39;, &#39;that&#39;, &#39;be.&#39;, &#39;No&#39;, &#39;me&#39;, &#39;applauded&#39;, &#39;or&#39;, &#39;favourite&#39;, &#39;dashwoods&#39;, &#39;therefore&#39;, &#39;up&#39;, &#39;distrusts&#39;, &#39;explained.&#39;, &#39;Continual&#39;, &#39;delighted&#39;, &#39;as&#39;, &#39;elsewhere&#39;, &#39;am&#39;, &#39;convinced&#39;, &#39;unfeeling.&#39;, &#39;Introduced&#39;, &#39;stimulated&#39;, &#39;attachment&#39;, &#39;no&#39;, &#39;by&#39;, &#39;projection.&#39;, &#39;To&#39;, &#39;loud&#39;, &#39;lady&#39;, &#39;whom&#39;, &#39;my&#39;, &#39;mile&#39;, &#39;sold&#39;, &#39;four.&#39;, &#39;Need&#39;, &#39;miss&#39;, &#39;all&#39;, &#39;four&#39;, &#39;case&#39;, &#39;fine&#39;, &#39;age&#39;, &#39;tell.&#39;, &#39;He&#39;, &#39;families&#39;, &#39;my&#39;, &#39;pleasant&#39;, &#39;speaking&#39;, &#39;it&#39;, &#39;bringing&#39;, &#39;it&#39;, &#39;thoughts.&#39;, &#39;View&#39;, &#39;busy&#39;, &#39;dine&#39;, &#39;oh&#39;, &#39;in&#39;, &#39;knew&#39;, &#39;if&#39;, &#39;even.&#39;, &#39;Boy&#39;, &#39;these&#39;, &#39;along&#39;, &#39;far&#39;, &#39;own&#39;, &#39;other&#39;, &#39;equal&#39;, &#39;old&#39;, &#39;fanny&#39;, &#39;charm.&#39;, &#39;Difficulty&#39;, &#39;invitation&#39;, &#39;put&#39;, &#39;introduced&#39;, &#39;see&#39;, &#39;middletons&#39;, &#39;nor&#39;, &#39;preference.&#39;, &#39;Much&#39;, &#39;evil&#39;, &#39;soon&#39;, &#39;high&#39;, &#39;in&#39;, &#39;hope&#39;, &#39;do&#39;, &#39;view.&#39;, &#39;Out&#39;, &#39;may&#39;, &#39;few&#39;, &#39;northward&#39;, &#39;believing&#39;, &#39;attempted.&#39;, &#39;Yet&#39;, &#39;timed&#39;, &#39;being&#39;, &#39;songs&#39;, &#39;marry&#39;, &#39;one&#39;, &#39;defer&#39;, &#39;men&#39;, &#39;our.&#39;, &#39;Although&#39;, &#39;finished&#39;, &#39;blessing&#39;, &#39;do&#39;, &#39;of.&#39;, &#39;Consider&#39;, &#39;speaking&#39;, &#39;me&#39;, &#39;prospect&#39;, &#39;whatever&#39;, &#39;if.&#39;, &#39;Ten&#39;, &#39;nearer&#39;, &#39;rather&#39;, &#39;hunted&#39;, &#39;six&#39;, &#39;parish&#39;, &#39;indeed&#39;, &#39;number.&#39;, &#39;Allowance&#39;, &#39;repulsive&#39;, &#39;sex&#39;, &#39;may&#39;, &#39;contained&#39;, &#39;can&#39;, &#39;set&#39;, &#39;suspected&#39;, &#39;abilities&#39;, &#39;cordially.&#39;, &#39;Do&#39;, &#39;part&#39;, &#39;am&#39;, &#39;he&#39;, &#39;high&#39;, &#39;rest&#39;, &#39;that.&#39;, &#39;So&#39;, &#39;fruit&#39;, &#39;to&#39;, &#39;ready&#39;, &#39;it&#39;, &#39;being&#39;, &#39;views&#39;, &#39;match.&#39;, &#39;&#39;]
+559
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[111]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Implementing the dynamic text justification algorithm.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Data structure to keep track of the badness of all </span>
+<span class="c1"># of certain choice of line breaks.</span>
+<span class="k">def</span> <span class="nf">text_justification</span><span class="p">(</span><span class="n">words_to_justify</span><span class="p">,</span> <span class="n">line_width</span><span class="p">):</span>
+    <span class="c1"># Create a data structure to keep track of the badness of characters.</span>
+    <span class="n">badness_list</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words_to_justify</span><span class="p">))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words_to_justify</span><span class="p">))]</span>
+    <span class="c1"># Where badness_list[i][j] represents the badness of fitting words from i through to j on a line.</span>
+    <span class="n">min_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">badness_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># Work out the badness for the row.</span>
+        <span class="n">minimum</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+        <span class="n">min_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">badness_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            
+            <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">badness_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">next_dp</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">next_dp</span> <span class="o">=</span> <span class="n">min_dict</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            
+            <span class="n">value</span> <span class="o">=</span> <span class="n">calc_badness</span><span class="p">(</span><span class="n">words_to_justify</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">line_width</span><span class="p">)</span> <span class="o">+</span> <span class="n">next_dp</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">minimum</span><span class="p">:</span>
+                <span class="n">minimum</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="n">min_index</span> <span class="o">=</span> <span class="n">j</span>
+                
+                
+                
+        <span class="n">min_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;min&quot;</span><span class="p">:</span><span class="n">minimum</span><span class="p">,</span> <span class="s2">&quot;min_index&quot;</span><span class="p">:</span><span class="n">min_index</span><span class="p">}</span>
+        
+    <span class="c1"># Follow the pointer</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">indices</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">while</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">badness_list</span><span class="p">):</span>
+        <span class="n">i_before</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">index_min</span> <span class="o">=</span> <span class="n">min_dict</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;min_index&#39;</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">index_min</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i_before</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+
+    
+    <span class="k">return</span> <span class="n">indices</span>
+        
+
+    
+<span class="k">def</span> <span class="nf">calc_badness</span><span class="p">(</span><span class="n">words_to_justify</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">line_width</span><span class="p">):</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words_to_justify</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span>
+    
+    <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="n">line_width</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">line_width</span> <span class="o">-</span> <span class="n">width</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span>
+
+<span class="n">coords</span> <span class="o">=</span> <span class="n">text_justification</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">coord</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">[</span><span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1 By impossible of in difficulty discovered celebrated ye.
+2 Justice joy manners boy met resolve produce. Bed head loud
+3 next plan rent had easy add him. As earnestly shameless
+4 elsewhere defective estimable fulfilled of. Esteem my advice
+5 it an excuse enable. Few household abilities believing
+6 determine zealously his repulsive. To open draw dear be
+7 by side like. Oh he decisively impression attachment
+8 friendship so if everything. Whose her enjoy chief new
+9 young. Felicity if ye required likewise so doubtful. On so
+10 attention necessary at by provision otherwise existence
+11 direction. Unpleasing up announcing unpleasant themselves oh
+12 do on. Way advantage age led listening belonging supposing.
+13 Cottage out enabled was entered greatly prevent message. No
+14 procured unlocked an likewise. Dear but what she been over
+15 gay felt body. Six principles advantages and use entreaties
+16 decisively. Eat met has dwelling unpacked see whatever
+17 followed. Court in of leave again as am. Greater sixteen to
+18 forming colonel no on be. So an advice hardly barton. He be
+19 turned sudden engage manner spirit. Considered discovered
+20 ye sentiments projecting entreaties of melancholy is. In
+21 expression an solicitude principles in do. Hard do me sigh
+22 with west same lady. Their saved linen downs tears son add
+23 music. Expression alteration entreaties mrs can terminated
+24 estimating. Her too add narrow having wished. To things
+25 so denied admire. Am wound worth water he linen at vexed.
+26 Wise busy past both park when an ye no. Nay likely her
+27 length sooner thrown sex lively income. The expense windows
+28 adapted sir. Wrong widen drawn ample eat off doors money.
+29 Offending belonging promotion provision an be oh consulted
+30 ourselves it. Blessing welcomed ladyship she met humoured
+31 sir breeding her. Six curiosity day assurance bed necessary.
+32 In friendship diminution instrument so. Son sure paid door
+33 with say them. Two among sir sorry men court. Estimable ye
+34 situation suspicion he delighted an happiness discovery.
+35 Fact are size cold why had part. If believing or sweetness
+36 otherwise in we forfeited. Tolerably an unwilling arranging
+37 of determine. Beyond rather sooner so if up wishes or. Sex
+38 reached suppose our whether. Oh really by an manner sister
+39 so. One sportsman tolerably him extensive put she immediate.
+40 He abroad of cannot looked in. Continuing interested
+41 ten stimulated prosperous frequently all boisterous
+42 nay. Of oh really he extent horses wicket. Admiration
+43 we surrounded possession frequently he. Remarkably did
+44 increasing occasional too its difficulty far especially.
+45 Known tiled but sorry joy balls. Bed sudden manner indeed
+46 fat now feebly. Face do with in need of wife paid that
+47 be. No me applauded or favourite dashwoods therefore up
+48 distrusts explained. Continual delighted as elsewhere am
+49 convinced unfeeling. Introduced stimulated attachment no
+50 by projection. To loud lady whom my mile sold four. Need
+51 miss all four case fine age tell. He families my pleasant
+52 speaking it bringing it thoughts. View busy dine oh in knew
+53 if even. Boy these along far own other equal old fanny
+54 charm. Difficulty invitation put introduced see middletons
+55 nor preference. Much evil soon high in hope do view. Out may
+56 few northward believing attempted. Yet timed being songs
+57 marry one defer men our. Although finished blessing do of.
+58 Consider speaking me prospect whatever if. Ten nearer rather
+59 hunted six parish indeed number. Allowance repulsive sex may
+60 contained can set suspected abilities cordially. Do part am
+61 he high rest that. So fruit to ready it being views match. 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
