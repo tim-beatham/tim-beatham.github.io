@@ -13944,16 +13944,14 @@ reallylongword</code></p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[111]:</div>
+<div class="prompt input_prompt">In&nbsp;[121]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Implementing the dynamic text justification algorithm.</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="c1"># Data structure to keep track of the badness of all </span>
-<span class="c1"># of certain choice of line breaks.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Implementing the Text Justification Algorithm via Dynamic Programming.</span>
+<span class="sd">This solution solves the problem in a bottop up approach instead of</span>
+<span class="sd">a recursive approach.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="k">def</span> <span class="nf">text_justification</span><span class="p">(</span><span class="n">words_to_justify</span><span class="p">,</span> <span class="n">line_width</span><span class="p">):</span>
     <span class="c1"># Create a data structure to keep track of the badness of characters.</span>
     <span class="n">badness_list</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words_to_justify</span><span class="p">))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words_to_justify</span><span class="p">))]</span>
@@ -14089,6 +14087,198 @@ reallylongword</code></p>
 61 he high rest that. So fruit to ready it being views match. 
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Edit-Distance">Edit Distance<a class="anchor-link" href="#Edit-Distance">&#182;</a></h2><p>Edit distance is a score which represents how similar two strings are.</p>
+<p>It is a measure of the distance of two strings in terms of character edits.</p>
+<p>The question the algorithm answers is how many edits are required are required to transform the string x to the string y? This is formally known as the Levenshtein distance.</p>
+<p>The edit distance algorithm can be used in spellchecking, auto correction &amp; plagarism detection to name a few use cases.</p>
+<p>We can make the following edits to transform a string:</p>
+<ol>
+<li>Insert</li>
+<li>Remove</li>
+<li>Replace</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[117]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Calculates the edit distance between two strings.</span>
+<span class="sd">We can either start from the right of the string</span>
+<span class="sd">or the left. We are going to start from the right.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">calc_edit_distance_recur</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">pointer1</span><span class="p">,</span> <span class="n">pointer2</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    If any of the pointers are at the end </span>
+<span class="sd">    before the others then we have to insert</span>
+<span class="sd">    n times.</span>
+<span class="sd">    This is the base case.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">pointer1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pointer2</span>
+    
+    <span class="k">if</span> <span class="n">pointer2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pointer1</span>
+    
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    If the corresponding characters are the same </span>
+<span class="sd">    then we have nothing to do.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">s1</span><span class="p">[</span><span class="n">pointer1</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">pointer2</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">calc_edit_distance_recur</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">pointer1</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">pointer2</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span>
+        <span class="c1"># Insert</span>
+        <span class="n">calc_edit_distance_recur</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">pointer1</span><span class="p">,</span> <span class="n">pointer2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="c1"># Remove</span>
+        <span class="n">calc_edit_distance_recur</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">pointer1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pointer2</span><span class="p">),</span>
+        <span class="c1"># Replace</span>
+        <span class="n">calc_edit_distance_recur</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">pointer1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pointer2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">calc_edit_distance</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">calc_edit_distance_recur</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">calc_edit_distance</span><span class="p">(</span><span class="s2">&quot;bail&quot;</span><span class="p">,</span> <span class="s2">&quot;bale&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[117]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-The-Algorithm-Is-Doing">What The Algorithm Is Doing<a class="anchor-link" href="#What-The-Algorithm-Is-Doing">&#182;</a></h3><p>Essentially the algorithm is traversing the DAG. The DAG is essentially a matrix where the number of rows is the size of the first string and the number ofcolumns is the size of the second string. Each cell in the matrix represents a node in the DAG (a node in the graph is a substring of the two strings). The aim of the algorithm is to traverse our way go cell at position (0, 0) which represents the original problem.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-Rucksack-Problem">The Rucksack Problem<a class="anchor-link" href="#The-Rucksack-Problem">&#182;</a></h2><p>Dynamic programming can solve the Rucksack problem (Knapsack problem if you are American).</p>
+<p>The Rucksack problem is defined as follows:</p>
+<p>You have a Rucksack of size S and you want to pack a set of items into the Rucksack:</p>
+<ul>
+<li>Each item has i has an integer size and a real value</li>
+<li>Te goal is to chose a subset of items which have a maximum total value and the total size of the subset &lt;= S.</li>
+</ul>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTNvUj-wiyV60Gad_AgRRVd1UrEPwjwRb9Z_A&amp;usqp=CAU" alt="ruck sack"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[136]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Solution to the Rucksack problem.</span>
+<span class="sd">I am using a recursive approach.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">calc_rucksack</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">item_weights</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="n">memoize</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">capacity</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">memoize</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">calc_ruck_recurs</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">item_weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="n">memoize</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">calc_ruck_recurs</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">number_elements</span><span class="p">,</span> <span class="n">memoize</span><span class="p">):</span>
+    
+    <span class="c1"># The base case is when the the capacity is 0 or the number of elements is  0.</span>
+    <span class="k">if</span> <span class="n">number_elements</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">capacity</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    
+    <span class="c1"># Use memoization to find the current element</span>
+    <span class="k">if</span> <span class="n">memoize</span><span class="p">[</span><span class="n">number_elements</span><span class="p">][</span><span class="n">capacity</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">memoize</span><span class="p">[</span><span class="n">number_elements</span><span class="p">][</span><span class="n">capacity</span><span class="p">]</span>
+        
+    <span class="c1"># Check if the weight is greater than the current weight of the ruck sack</span>
+    <span class="k">if</span> <span class="n">weights</span><span class="p">[</span><span class="n">number_elements</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">capacity</span><span class="p">:</span>
+        <span class="n">memoize</span><span class="p">[</span><span class="n">number_elements</span><span class="p">][</span><span class="n">capacity</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_ruck_recurs</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> 
+                                                              <span class="n">values</span><span class="p">,</span> <span class="n">number_elements</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">memoize</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">memoize</span><span class="p">[</span><span class="n">number_elements</span><span class="p">][</span><span class="n">capacity</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># Return the maximum of including the elements in vs not including the elements.</span>
+        <span class="n">memoize</span><span class="p">[</span><span class="n">number_elements</span><span class="p">][</span><span class="n">capacity</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+        <span class="n">values</span><span class="p">[</span><span class="n">number_elements</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span>  
+        <span class="n">calc_ruck_recurs</span><span class="p">(</span><span class="n">capacity</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">number_elements</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">number_elements</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">memoize</span><span class="p">),</span>
+        <span class="n">calc_ruck_recurs</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">number_elements</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">memoize</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">memoize</span><span class="p">[</span><span class="n">number_elements</span><span class="p">][</span><span class="n">capacity</span><span class="p">]</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">120</span><span class="p">]</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="n">capacity</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">calc_rucksack</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>4
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[136]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>220</pre>
+</div>
+
 </div>
 
 </div>
