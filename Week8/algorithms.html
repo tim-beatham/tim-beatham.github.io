@@ -13080,7 +13080,7 @@ div#notebook {
 <h1 id="MIT-6.006-Part-2">MIT 6.006 Part 2<a class="anchor-link" href="#MIT-6.006-Part-2">&#182;</a></h1><p>This week I will finish the introduction to algorithms course I started last week.</p>
 <h2 id="Single-Source-Shortest-Path-Problem">Single-Source Shortest Path Problem<a class="anchor-link" href="#Single-Source-Shortest-Path-Problem">&#182;</a></h2><p>Often we want to find the shortest distance from one vertex to another. This problem can be hard to solve as even with a relatively small number of vertices it would take a long time (many years) to find the shortest path to a given vertex.</p>
 <p>If a graph is weighted it means there is a cost to go from one vertex to another.</p>
-<p>A graph can have negative weights. One example is when a taxi gets from one destination to another a negative weight could represent money earned and a positive weight could represent money spent on fuel.</p>
+<p>A graph can have negative weights. One example is when a taxi gets from one destination to another, a negative weight could represent money earned and a positive weight could represent money spent on fuel.</p>
 <p>If a graph has a negative cycle then certain shortest paths are undefined.</p>
 <p>Single-Source Shortest Path algorithms work by setting the starting node to have a cost of 0 and all other nodes to having a cost of infinity.</p>
 <p>Then we select an edge (u, v).</p>
@@ -13096,7 +13096,7 @@ div#notebook {
 <h3 id="The-Algorithm">The Algorithm<a class="anchor-link" href="#The-Algorithm">&#182;</a></h3><ol>
 <li>Set the weight of the starting vertex to 0 and all other vertices to infinity and add the distances to a priority queue.</li>
 <li>Pop from the priority queue and assign to variable v.</li>
-<li>Update the weight of adjacent nodes to the vertex v if the cost is lower.</li>
+<li>Update the weights of each adjacent node if the weight of vertex v plus the cost of the edge u is less than the current weight value.</li>
 <li>Repeat 2-3 until the priority queue is empty.</li>
 </ol>
 <p><img src="https://i.stack.imgur.com/90Qwu.png" alt="dijikstra&#39;s algorithm"></p>
@@ -13107,7 +13107,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[140]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">heapq</span>
@@ -13247,7 +13247,7 @@ When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="prompt input_prompt">In&nbsp;[141]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Implementing Bi-Directional Search</span>
@@ -13348,7 +13348,7 @@ When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[104]:</div>
+    <div class="prompt output_prompt">Out[141]:</div>
 
 
 
@@ -13366,7 +13366,7 @@ When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Goal-Directed-Search-(A*-Algorithm)">Goal-Directed Search (A* Algorithm)<a class="anchor-link" href="#Goal-Directed-Search-(A*-Algorithm)">&#182;</a></h3><p>In a goal directed search we sort the priority queue by an additional heuristic function to make it more likely that the algorithm picks a vertex which is part of the final path to the destination thus speeding up computation in practice.</p>
+<h3 id="Goal-Directed-Search-(A*-Algorithm)">Goal-Directed Search (A* Algorithm)<a class="anchor-link" href="#Goal-Directed-Search-(A*-Algorithm)">&#182;</a></h3><p>In a goal directed search we sort the priority queue by an additional heuristic function to make it more likely that the algorithm picks a vertex which is part of the final path to the destination. Thus speeding up computation in practice.</p>
 <p>There are different heuristics that we can use.</p>
 <h4 id="Manhatten-Distance">Manhatten Distance<a class="anchor-link" href="#Manhatten-Distance">&#182;</a></h4><p>h = abs (current_cell.x - goal.x) + abs( current_cell.y - goal.y)</p>
 <h4 id="Diagonal-Distance">Diagonal Distance<a class="anchor-link" href="#Diagonal-Distance">&#182;</a></h4><p>h = max { abs (current_cell.x - goal.x), abs (current_cell.y - goal.y) }</p>
@@ -13387,7 +13387,7 @@ When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
 <li>St = Stirling</li>
 <li>SA = St Andrews</li>
 </ul>
-<p>Additionally I will the euclidean heuristic distance using longitude and latitude coordinates to help find the optimum route.</p>
+<p>I will use the euclidean heuristic distance using longitude and latitude coordinates to help find the optimum route.</p>
 <p>The weights on the graph represents the time it takes to travel from one node to the other in minutes. The weights are not the distances between the two nodes.</p>
 
 </div>
@@ -13395,7 +13395,7 @@ When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[195]:</div>
+<div class="prompt input_prompt">In&nbsp;[142]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
@@ -13536,14 +13536,14 @@ When we stop we find the node x which has a minimum value of df(x) + db(x).</p>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Distances {Skipton(53.9628, 2.0163): {&#39;distance&#39;: 0, &#39;prev_node&#39;: None}, Bradford(53.796, 1.7594): {&#39;distance&#39;: 35, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}, Leeds(53.8008, 1.5491): {&#39;distance&#39;: 58, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}, Newcastle(54.9783, 1.6178): {&#39;distance&#39;: 166, &#39;prev_node&#39;: Leeds(53.8008, 1.5491)}, Kendal(54.328, 2.7463): {&#39;distance&#39;: 71, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}, Carlisle(54.8925, 2.9329): {&#39;distance&#39;: inf, &#39;prev_node&#39;: None}, Glasgow(55.8642, 4.2518): {&#39;distance&#39;: 373, &#39;prev_node&#39;: Edinburgh(55.9533, 3.1883)}, Edinburgh(55.9533, 3.1883): {&#39;distance&#39;: 310, &#39;prev_node&#39;: Newcastle(54.9783, 1.6178)}, St Andrews(56.3398, 2.7967): {&#39;distance&#39;: 393, &#39;prev_node&#39;: Edinburgh(55.9533, 3.1883)}, Stirling(56.1165, 3.9369): {&#39;distance&#39;: inf, &#39;prev_node&#39;: None}, Sheffield(53.3811, 1.4701): {&#39;distance&#39;: 104, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}, Manchester(53.3811, 1.4701): {&#39;distance&#39;: 79, &#39;prev_node&#39;: Skipton(53.9628, 2.0163)}}
 
-Visited {Leeds(53.8008, 1.5491), Newcastle(54.9783, 1.6178), Skipton(53.9628, 2.0163), Edinburgh(55.9533, 3.1883), Bradford(53.796, 1.7594)}
+Visited {Newcastle(54.9783, 1.6178), Leeds(53.8008, 1.5491), Edinburgh(55.9533, 3.1883), Bradford(53.796, 1.7594), Skipton(53.9628, 2.0163)}
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[195]:</div>
+    <div class="prompt output_prompt">Out[142]:</div>
 
 
 
@@ -13565,9 +13565,9 @@ Visited {Leeds(53.8008, 1.5491), Newcastle(54.9783, 1.6178), Skipton(53.9628, 2.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="The-Problem-With-Using-Euclidean-In-The-Above-Example">The Problem With Using Euclidean In The Above Example<a class="anchor-link" href="#The-Problem-With-Using-Euclidean-In-The-Above-Example">&#182;</a></h3><p>Using euclidean distance as a heuristic has many problems in the above example which shows it is not the best heuristic for the problem.</p>
-<p>If I change the heuristic factor too much then the algorithm always goes in the direction which is closest to St Andrews as the bird flies. Hence when the heuristic_factor variable is 100 the algorithm says that the quickest route to St Andrews is Skipton -&gt; Leeds -&gt; Newcastle -&gt; Edinburgh -&gt; St Andrews. When in fact the quiest route is Skipton -&gt; Kendal -&gt; Carlisle -&gt; Glasgow -&gt; Stirling -&gt; St Andrews</p>
-<p>When the heuristic factor is too low the algorithm is not influenced greatly and explores nodes it does not need to such as Manchester and Sheffield. It does however ultimately find the shortest path.</p>
+<h3 id="The-Problem-With-Using-Euclidean-In-The-Above-Example">The Problem With Using Euclidean In The Above Example<a class="anchor-link" href="#The-Problem-With-Using-Euclidean-In-The-Above-Example">&#182;</a></h3><p>Using euclidean distance as a heuristic has many problems in the above example.
+If I change the heuristic factor too much then the algorithm always goes in the direction which is closest to St Andrews as the bird flies. Hence when the heuristic_factor variable is 100 the algorithm says that the quickest route to St Andrews is Skipton -&gt; Leeds -&gt; Newcastle -&gt; Edinburgh -&gt; St Andrews. When in fact the quiest route is Skipton -&gt; Kendal -&gt; Carlisle -&gt; Glasgow -&gt; Stirling -&gt; St Andrews</p>
+<p>When the heuristic factor is too low the heuristic factor has very little effect on the determination of the next node we will visit. It does however ultimately find the shortest path.</p>
 
 </div>
 </div>
@@ -13730,7 +13730,7 @@ It is particularly used for optimization problems.</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The above algorithm is not efficient at all. If you think of the recursive calls as a tree to compute F<sub>n - 1</sub> requires you to compute F<sub>n - 2</sub> and F<sub>n - 3</sub>. To compute F<sub>n - 2</sub> requires you to compute F<sub>n - 3</sub> and F<sub>n - 4</sub> and so on. Meaning the time comlexity of the above algorithm is exponential (O (n<sup>n/2</sup>))</p>
-<h3 id="The-Memoized-Fibonacci-Algorithm">The Memoized Fibonacci Algorithm<a class="anchor-link" href="#The-Memoized-Fibonacci-Algorithm">&#182;</a></h3><p>Memoization is an optimization technique to speedup the performance of algorithms.</p>
+<h3 id="The-Memoized-Fibonacci-Algorithm">The Memoized Fibonacci Algorithm<a class="anchor-link" href="#The-Memoized-Fibonacci-Algorithm">&#182;</a></h3><p>Memoization is an optimization technique to speed up the performance of algorithms.</p>
 <p>If you look at the recursion tree you will notice we are working out the answer to F<sub>n - 2</sub> multiple times. By keeping track of the subproblems we have solved and storing them in a data structure for when we need them again we can increase the performance of the algorithm to O(n) time complexity.</p>
 
 </div>
@@ -13738,7 +13738,7 @@ It is particularly used for optimization problems.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[143]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">memory</span> <span class="o">=</span> <span class="p">{}</span>
@@ -13768,7 +13768,7 @@ It is particularly used for optimization problems.</p>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[143]:</div>
 
 
 
@@ -13789,15 +13789,15 @@ It is particularly used for optimization problems.</p>
 <p>By storing each result to each fibonacci call in a hash map we can access the results of previous fibonacci calls in O(1) time complexity.</p>
 <p>The algorithm above:</p>
 <ul>
-<li>Only recurses first time called.</li>
+<li>Only recurses the first time called.</li>
 <li>There are only n nonmemoized calls.</li>
 <li>memoized calls take O(1) time complexity.</li>
-<li>O(1) time compleity per call ignoring recursion.</li>
+<li>If we ignore recursion each call takes O(1) time complexity.</li>
 </ul>
 <p>The above points mean the algorithm becomes polynomial in time complexity which is good.</p>
 <p>time = number of subproblems * time per subproblem</p>
 <p>In the above example the number of subproblems is n and the time per subproblem is O(1). Meaning the above algorithm is O(n) time complexity.</p>
-<h3 id="Bottom-Up-DP-Algorithm">Bottom-Up DP Algorithm<a class="anchor-link" href="#Bottom-Up-DP-Algorithm">&#182;</a></h3><p>By imagining the treatting the recursive calls as a tree we can create a memoizedd algorithm which has the same time complexity but uses no recursion.</p>
+<h3 id="Bottom-Up-DP-Algorithm">Bottom-Up DP Algorithm<a class="anchor-link" href="#Bottom-Up-DP-Algorithm">&#182;</a></h3><p>By treating the recursive calls as a tree we can create a memoized algorithm which has the same time complexity but uses no recursion.</p>
 <p>Practically speaking this is faster as it involves no recursion.</p>
 <p>There is an even faster fibonacci algorithm which takes O(lg n) time.</p>
 
@@ -13850,11 +13850,11 @@ It is particularly used for optimization problems.</p>
 <h3 id="Guessing-in-Dynamic-Programming">Guessing in Dynamic Programming<a class="anchor-link" href="#Guessing-in-Dynamic-Programming">&#182;</a></h3><p>Guessing is a powerful tool in dynamic programming.</p>
 <p>When we implement guessing in dynamic programming we guess the answer to a subproblem and we take the minimum (or maximum) of the guesses as the answer. We do this for each subproblem.</p>
 <p>This is how the Bellman Ford algorithm works. We guess the shortst path s to v say (u, v). This works due to the triangle inequality formula.</p>
-<p>shortest s -&gt; u path + edge(u, v)</p>
+<p>shortest path to s -&gt; u path + edge(u, v)</p>
 <p>Finding the u path is another subproblem and we keep doing this recursively until we have solved all the subproblems and thus found the shortest path from s to v.</p>
 <p>We use memoization to ensure the time complexity is polynomial otherwise the time complexity would be exponential and thus very inefficient.</p>
-<p>For a direct acyclic graph it has a time complexity of O(V + E)</p>
-<p>If the this is not the case the algorithm runs forever. However we can remove all cyclic dependencies by addding more subproblems.</p>
+<p>For a direct acyclic graph the technique has a time complexity of O(V + E)</p>
+<p>If this is not the case the algorithm runs forever. However we can remove all cyclic dependencies by addding more subproblems.</p>
 <h3 id="Text-Justification">Text Justification<a class="anchor-link" href="#Text-Justification">&#182;</a></h3><p><img src="https://css-tricks.com/wp-content/uploads/2017/08/justify-text-figure-1.png" alt="text justification"></p>
 <p>Dynamic programming can be used in text justification. In text justification we find the best point to split each line. This makes the text readable.</p>
 <p>One obvious way is through the greedy algorithm. That is fit as many words as possible on the first line then as many on the second line and so on. This is bad because in practice as it can make some lines not very readable.</p>
@@ -13877,10 +13877,14 @@ reallylongword</code></p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[144]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An extract of text we will attempt to justify.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="n">long_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;By impossible of in difficulty discovered celebrated ye. Justice joy manners boy met resolve produce. Bed head loud next plan rent had easy add him. As earnestly shameless elsewhere defective estimable fulfilled of. Esteem my advice it an excuse enable. Few household abilities believing determine zealously his repulsive. To open draw dear be by side like. </span>
 
@@ -13910,7 +13914,7 @@ reallylongword</code></p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="prompt input_prompt">In&nbsp;[145]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">long_text</span><span class="p">)</span>
@@ -13944,7 +13948,7 @@ reallylongword</code></p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[121]:</div>
+<div class="prompt input_prompt">In&nbsp;[146]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -14185,7 +14189,7 @@ reallylongword</code></p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="What-The-Algorithm-Is-Doing">What The Algorithm Is Doing<a class="anchor-link" href="#What-The-Algorithm-Is-Doing">&#182;</a></h3><p>Essentially the algorithm is traversing the DAG. The DAG is essentially a matrix where the number of rows is the size of the first string and the number ofcolumns is the size of the second string. Each cell in the matrix represents a node in the DAG (a node in the graph is a substring of the two strings). The aim of the algorithm is to traverse our way go cell at position (0, 0) which represents the original problem.</p>
+<h3 id="What-The-Algorithm-Is-Doing">What The Algorithm Is Doing<a class="anchor-link" href="#What-The-Algorithm-Is-Doing">&#182;</a></h3><p>Essentially the algorithm is traversing the DAG. The DAG is essentially a matrix where the number of rows is the size of the first string and the number of columns is the size of the second string. Each cell in the matrix represents a node in the DAG (a node in the graph is a substring of the two strings). The aim of the algorithm is to traverse our way go cell at position (0, 0) which represents the original problem.</p>
 
 </div>
 </div>
@@ -14198,7 +14202,7 @@ reallylongword</code></p>
 <p>You have a Rucksack of size S and you want to pack a set of items into the Rucksack:</p>
 <ul>
 <li>Each item has i has an integer size and a real value</li>
-<li>Te goal is to chose a subset of items which have a maximum total value and the total size of the subset &lt;= S.</li>
+<li>The goal is to chose a subset of items which have a maximum total value and the total size of the subset &lt;= S.</li>
 </ul>
 <p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTNvUj-wiyV60Gad_AgRRVd1UrEPwjwRb9Z_A&amp;usqp=CAU" alt="ruck sack"></p>
 
@@ -14207,7 +14211,7 @@ reallylongword</code></p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[138]:</div>
+<div class="prompt input_prompt">In&nbsp;[147]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
@@ -14257,7 +14261,7 @@ reallylongword</code></p>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[138]:</div>
+    <div class="prompt output_prompt">Out[147]:</div>
 
 
 
@@ -14268,6 +14272,29 @@ reallylongword</code></p>
 
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Finished">Finished<a class="anchor-link" href="#Finished">&#182;</a></h2><p>Thats it in terms of the MIT course. I have left out two topics from the course. I have left out the algorithm for integer multiplication and I have left out how to represent irrational numbers using Newton's Method to an arbitrary level of precision. If you want to know how to implement these algorithms then look up the lectures on YouTube.</p>
+<p>I have nothing else to write so I will end this post with a picture of a pint of Timothy Taylor's Landlord.
+<img src="https://lh3.googleusercontent.com/proxy/hHLeMxNFsj58HQ4UjzQaiFt6X_cIZP9DDtrqbGBqUJ96gzHauWI70H2nHUiR4RmbsCGPat1yYjK2Mrs_ibTJ4l2MTi3djOvt0cJeIWFW5Ze4PK5CI8VJCzahskCbA0y_7Y-AfQ" alt="timothy taylor&#39;s landlord"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
 </div>
 </div>
 
