@@ -28,3 +28,11 @@
 	width: 900px;
 	height: 400px;
 }
+
+.img-width4{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 718px;
+	height: 700px;
+}
