@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Starting DeepLearning.AI And Learning Kotlin</title>
+    <title>StacsHack Halloween 2020</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,13 +13,94 @@
 <body>
 
 <div class="container justify-content-center">
-    <div class="my-auto">
+    <div class="container my-auto">
 
-        <h1>Starting the Blog Again After A Month Off</h1>
+        <h1>Runners Up In StacsHack Halloween 2020</h1>
 
-        <p>Throughout August I was working in a hotel as a full-time job and therefore I had to take a break from the blog
-        for a short while. However now I am back and plan on to continue where I left off. Uni is starting soon so I don't know
-        how many blog posts I will be able to make.</p>
+        <h2>StacsHack</h2>
+
+        <img src="stacshack-tim.jpg" alt="Myself in StacsHack 2020" class="quarter-size"/>
+
+        <br />
+
+        <p>After what has been a challenging few weeks at University myself and Billy decided to take part
+        in a Hackathon. We had 10 hours to make a program of our own choosing. Before
+        entering the competition we both agreed that we would implement a browser based version of the Ring Of Fire
+        card game called Token Ring Of Fire after the Network Topology.</p>
+
+        <p>The point of the game is to pick a random card from a deck and when given a number you have to do
+        some sort of challenge, this usually involves drinking. In the ten hours we developed a room system, a user
+        system, a messaging system, a turn system and of course we made a system that allowed a user to pick
+        cards from a deck.</p>
+
+        <p>In the competition we got the runners-up award for the sub-honours category.</p>
+
+        <h2>Token Ring Of Fire</h2>
+        <h4>The Main Menu</h4>
+
+
+        <img src="Screenshot%20from%202020-11-01%2010-45-41.png" alt="The Main Menu" class="centre"/>
+
+
+
+        <p>When the user connects to the website they are prompted to enter a name. This name has to be
+        unique to the room in which they are joining. If the user wants to create a game they press
+        the 'Create Game' button which creates a new room. </p>
+
+        <p>When a room is created the host is given a UUID4 code which they can give to other users to
+        join the game.</p>
+
+        <h4>Joining A Game</h4>
+
+        <img src="join.png" alt="Joining The Game" class="centre" />
+
+
+
+        <p>If the user presses join game they are then presented with a box to enter their code. When they
+        enter the game code it allows them to join the game. Currently there is no limit to how many users
+        can join a game.</p>
+
+        <h4>Picking A Card</h4>
+
+        <img src="pick_card.png" alt="Picking A Card" class="centre" />
+
+
+        <p>Once the host presses start game. A random user is chosen to pick a card.  When they press the pick card
+        button a random card is selected and then removed from the deck. At the bottom they are given presented with
+        a task to perform for that particular card.</p>
+
+        <h2>The Back-End</h2>
+
+        <p>My job was to create the back-end for the game. I created the back-end using a WebSocket library called
+        Socket.IO, which was attached to an express server. The express server served the images for all the cards and the website
+        itself.</p>
+
+        <p>Socket.IO is event based. The client will emit an event to a socket and the server will respond to the event,
+        usually emitting another event in response. This made it incredibly easy to develop the back end. It meant we could
+        create rooms by joining sockets together.</p>
+
+        <p>The hardest part of the back end was integrating it to the front-end. In hindsight we should've done this
+        sooner so we had time to implement more features. When we got the front-end and back-end fully integrated
+        it was incredibly easy to add features to the front-end and back-end.</p>
+
+        <h2>The Front End</h2>
+
+        <p>The Front-End uses a responsive web layout. However Billy used no libraries whatsoever. He just used plain HTML and CSS.
+        Billy created a front-end API which allowed me to present events to the user via the front-end API. Billy made it incredibly
+        easy for me to display a server event to the user via the front-end.</p>
+
+        <img src="billy.jpg" alt="Billy developing the front end" class="quarter-size"/>
+
+        <h2>General Comments</h2>
+
+        <p>The beauty of the idea was that is was fun to develop. Once we finished it we had to develop a three minute video demonstrating it.
+        In the video we got drunk which I believe helped us to get second place in the sub-honours category.
+        At several points during the Hackathon we thought we wouldn't be able to develop it in time, and when you are under pressure it makes it
+        event harder to debug a problem. However in the end we got it done which is better than our last Hackathon attempt.</p>
+
+        <p>In our free time we really want to develop it further. We have more ideas about what we can do with the game such as developing a deck system
+        where the user can create and edit a deck. To do this the user would simply have to edit a JSON file and make a POST request to a HTTP server.
+        In the Hackathon we have laid out the ground work for developing the application further.</p>
 
         <br />
         <br />
