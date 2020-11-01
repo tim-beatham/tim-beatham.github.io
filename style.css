@@ -1,8 +1,9 @@
 .centre{
-	margin: auto;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 	width: 50%;
 	padding: 10px;
-	line-height: 1.6;
 }
 
 .image-width{
@@ -35,4 +36,19 @@
 	margin-right: auto;
 	width: 718px;
 	height: 700px;
+}
+
+.quarter-size {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 25%;
+	height: 25%;
+}
+
+.caption {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	justify-content: center;
 }
