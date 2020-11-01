@@ -38,12 +38,12 @@
 	height: 700px;
 }
 
-.quarter-size {
+.img-stacshack {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	width: 25%;
-	height: 25%;
+	width: 375px;
+	height: 667px;
 }
 
 .caption {
@@ -51,4 +51,12 @@
 	margin-left: auto;
 	margin-right: auto;
 	justify-content: center;
+}
+
+.img-screen {
+	display:block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 640px;
+	height: 360px;
 }
