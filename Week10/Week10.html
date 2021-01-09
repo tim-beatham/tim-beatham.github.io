@@ -1,70 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Starting DeepLearning.AI And Learning Kotlin</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+    <head>
+        <title>Multiplayer Quiz In React.JS</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
 
-<body>
+    <body>
 
-<div class="container justify-content-center">
-    <div class="my-auto">
+        <div class="container justify-content-center">
+            <div markdown="1">
+# Pub Quiz Implementation Using React
 
-        <h1>Starting DeepLearning.AI Specialization And Learning Kotlin</h1>
+The project shows my implementation of a pub quiz using React.JS, Express, MongoDB and Socket.IO.
+The beauty of the quiz is that any question can be asked. It relies on one user to dedicate themselves
+as a marker to mark the questions the other users have answered.
 
-        <h2>A Quick Note</h2>
-        <p>Now that I have a job please note that the length of each blog post has been significantly reduced, and I
-            expect my projects to be less exciting.</p>
+An alternative approach would be to use multiple choice questions but this does not properly simulate
+a pub quiz as it gives the answer away.
 
-        <h2>DeepLearning.AI</h2>
+There is a lot of work that needs to be done for it to be used in the real world. One would ideally want to
+make it look more aestheitcally pleasing, provide a way to make a user account and add more features to the quiz
+such as uploading images.
 
-        <p>This week I have started a Coursera Specialization which is about Deep Learning. At the time of writing this
-        blog post I have finished the first course of the specialization. So far I have implemented logistic regression, forward propagation,
-        backwards propagation, gradient descent and created a shallow and deep neural network. I hope the course will equip me with the
-        tools I need to build a successful career in Machine Learning in the future.</p>
+## The Main Menu
 
-        <img src="../Certificates/deeplearning_certificate.png" class="image-width2 img-responsive">
+![The Main Menu](./screenshots/main_menu.png)
 
-        <img src="https://deeplearning-assets.s3.amazonaws.com/content/uploads/2018/09/deeplearning-logo-fb.png"
-             class="image-width img-responsive" />
+When making a request to the site a user is presented with a main menu. From here they can create their
+own quiz, create a game or join a game.
 
-        The specialization consists of five courses:
-        <ul>
-            <li>Neural Network and Deep Learning</li>
-            <li>Improving Deep Neural Networks</li>
-            <li>Structuring Machine Learning Projects</li>
-            <li>Convolutional Neural Networks</li>
-            <li>Sequence Models</li>
-        </ul>
+Before creating or joining a game they are required to enter an appropriate username.
 
-        <p>After I have completed this specialization I plan on starting another specialization in Natural Language
-        Processing.</p>
+## Creating A Quiz
 
-        <h2>Kotlin</h2>
+![Creating A Quiz](./screenshots/create_quiz.png)
 
-        <p>This week I have also started learning Kotlin. Kotlin is a multi paradigm programming language build by JetBrains
-        the people who made the IntelliJ IDE. Kotlin is allows for comparability with Java meaning you can use Java libraries in
-        Kotlin and you can use Kotlin libraries in Java using the Java-to-Kotlin converter. Kotlin is mainly used at the minute
-        for Android Development but the language itself is getting more and more popular by the day. </p>
+When creating a quiz the user is asked to enter a series of questions and answers. They have to
+provide at least one question and answer and they have to provide a title of the quiz.
 
-        <p>In Kotlin has both Object Oriented and Functional elements to the programming language. Additionally it is strongly typed
-        meaning you have to explicitly specify the data type of each variable which means it runs faster than languages such as Python.</p>
+From here they can then preview the quiz and consequently make a POST request to back end API. The
+back end then stores the quiz in a MongoDB database.
 
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/220px-Kotlin-logo.svg.png"
-             class="image-width img-responsive" />
+## Creating A Game
 
+![Creating A Game](./screenshots/create_game.png)
 
+When creating a game the user has to select a quiz that they want to use for the game. They are presented
+with all the quizzes that users have made.
 
-        <br />
-        <br />
+## Joining A Game
 
-    </div>
-</div>
+![Joining A Game](./screenshots/join_game.png)
 
-</body>
+When a user joins the game they simply have to click on the game that they want to join and it takes them to
+the lobby.
+
+## The Game Lobby
+
+![The Game Lobby](./screenshots/game_lobby.png)
+
+The game lobby shows all of the players that are connected and it shows the quiz master in green. Only
+the quiz master can press the start game button.
+
+## Answering A Question
+
+![Answering A Question](./screenshots/answer_question.png)
+
+A user answers a questions by simply entering the question in the input box and pressing enter, there
+is nothing fancy going on here.
+
+## Marking A Question
+
+![Marking A Question](./screenshots/marker.png)
+
+The marker marks the question by selecting on a user question box. When it is green
+the marker marks it as correct. When it is red the marker marks it as incorrect.
+
+## The Leaderboard
+
+![The Leaderboard](./screenshots/leaderboard.png)
+
+At the end of the quiz everyone is presented with a leaderboard table which shows who won the quiz.
+
+            </div>
+        </div>
+
+    </body>
 </html>
